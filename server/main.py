@@ -19,8 +19,10 @@ def acceptPlayer(sock: Socket) -> Tuple[Socket, str]:
     conn.send(b"pass")
     playerPassword: bytes = conn.recv(32)
     if playerPassword != b"password":
+        conn.send(b"badpass!")
         conn.close()
         raise PasswordMismatch
+    conn.send(b"loggedin")
 
     return (conn, username)
 
