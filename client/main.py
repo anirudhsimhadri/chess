@@ -2,9 +2,14 @@ from socket import socket as Socket
 
 class BadConnection(BaseException): pass
 
-def connectToServer(port: int, name: str, password: str) -> Socket:
+def connectToServer(
+    addr: str,
+    port: int,
+    name: str,
+    password: str
+) -> Socket:
     sock: Socket = Socket()
-    sock.connect(("localhost", port))
+    sock.connect((addr, port))
 
     msg: bytes = sock.recv(8)
     if msg != b"chess???":
