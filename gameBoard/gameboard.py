@@ -38,16 +38,16 @@ def draw_tracking_boxes(screen):
     """Draws the material tracking boxes on the screen"""
 
     #top tracking box
-    pygame.draw.rect(screen, BLACK, (OFFSET_X- 4, OFFSET_Y - 130, BOX_WIDTH + 8, BOX_HEIGHT + 8), 4)
     pygame.draw.rect(screen, BLUE, (OFFSET_X, 0, BOX_WIDTH, BOX_HEIGHT))
 
     #bottom tracking box
-    pygame.draw.rect(screen, BLACK, (OFFSET_X - 4, OFFSET_Y + BOARD_SIZE, BOX_WIDTH + 8, BOX_HEIGHT + 8), 4)
     pygame.draw.rect(screen, BLUE, (OFFSET_X, WINDOW_SIZE - BOX_HEIGHT, BOX_WIDTH, BOX_HEIGHT))
         
 def draw_border(screen):
     """Draws the border around the important screen elements"""
     pygame.draw.rect(screen, BLACK, (OFFSET_X, OFFSET_Y, BOARD_SIZE, BOARD_SIZE), 5)
+    pygame.draw.rect(screen, BLACK, (OFFSET_X- 4, OFFSET_Y - 130, BOX_WIDTH + 8, BOX_HEIGHT + 8), 5)
+    pygame.draw.rect(screen, BLACK, (OFFSET_X - 4, OFFSET_Y + BOARD_SIZE, BOX_WIDTH + 8, BOX_HEIGHT + 8), 5)
 
 def main():
     screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
