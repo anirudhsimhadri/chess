@@ -1,6 +1,7 @@
 from socket import socket as Socket
 
 class BadConnection(BaseException): pass
+class PasswordMismatch(BaseException): pass
 
 def connectToServer(
     addr: str,
@@ -28,5 +29,9 @@ def connectToServer(
         sock.close()
         raise BadConnection
     sock.send(password.encode())
+
+    msg = sock.recv(8)
+    if msg == b"badpass": raise PasswordMismatch
+    elif msg != b"loggedin": raise BadConnection
 
     return sock
