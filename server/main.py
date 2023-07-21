@@ -4,7 +4,7 @@ from socket import socket as Socket
 class BadConnection(BaseException): pass
 class PasswordMismatch(BaseException): pass
 
-def acceptPlayer(sock: Socket) -> Tuple[Socket, str]:
+def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:
     conn, addr = sock.accept()
 
     conn.send(b"chess???")
@@ -17,8 +17,8 @@ def acceptPlayer(sock: Socket) -> Tuple[Socket, str]:
     username: str = str(conn.recv(32))
     
     conn.send(b"pass")
-    playerPassword: bytes = conn.recv(32)
-    if playerPassword != b"password":
+    playerPassword: str = str(conn.recv(32))
+    if playerPassword != password:
         conn.send(b"badpass!")
         conn.close()
         raise PasswordMismatch
@@ -26,7 +26,7 @@ def acceptPlayer(sock: Socket) -> Tuple[Socket, str]:
 
     return (conn, username)
 
-def serve(port: int):
+def serve(port: int, password: str):
     sock: Socket = Socket()
     sock.bind(("0.0.0.0", port))
     sock.listen()
@@ -38,7 +38,7 @@ def serve(port: int):
 
     while True:
         try:
-            p1Conn, p1Name = acceptPlayer(sock)
+            p1Conn, p1Name = acceptPlayer(sock, password)
             break
         except BadConnection:
             print("P1 couldn't connect properly")
@@ -51,7 +51,7 @@ def serve(port: int):
 
     while True:
         try:
-            p2Conn, p2Name = acceptPlayer(sock)
+            p2Conn, p2Name = acceptPlayer(sock, password)
             break
         except BadConnection:
             print("P2 couldn't connect properly")
