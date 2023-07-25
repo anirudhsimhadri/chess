@@ -1,5 +1,7 @@
 from typing import Tuple, List
-from socket import socket as Socket
+import socket
+
+Socket = socket.socket
 
 class BadConnection(BaseException): pass
 class PasswordMismatch(BaseException): pass
@@ -29,6 +31,12 @@ def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:
 def serve(port: int, password: str):
     sock: Socket = Socket()
     sock.bind(("0.0.0.0", port))
+    print(
+        "Serving at address {} on port {}".format(
+            socket.gethostbyname(socket.getfqdn()),
+            port
+        )
+    )
     sock.listen()
 
     p1Conn: Socket | None = None
@@ -61,3 +69,5 @@ def serve(port: int, password: str):
             continue
     
     print("P2 connected with name {}".format(p2Name))
+
+if __name__ == "__main__": serve(4567, "password")
