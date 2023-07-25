@@ -1,9 +1,18 @@
 from chesspiece import ChessPiece
+import pygame
+
 
 class Pawn(ChessPiece):
-    def __init__(self, color:str, hasMoved:bool):
-        super().__init__("pawn", color,1)
+    def __init__(self, color:str):
+        self.type = "pawn"
+        self.color = color
+        self.MaterialValue = 1
         self.hasMoved = False
+
+        if self.color == "white":
+            self.image = pygame.image.load('chess/1x/w_pawn_1x.png')
+        elif self.color == "black":
+            self.image = pygame.image.load('chess/1x/b_pawn_1x.png')
     
     def __str__(self):
         return "pawn" if self.color == "white" else "p"
