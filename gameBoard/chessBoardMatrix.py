@@ -45,13 +45,26 @@ class ChessBoardMatrix:
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
             for col in range(self.cols):
-                piece = self.chessboard[row][col]
-                if piece:
+                if self.chessboard[row][col]:
                     x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X)
                     y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y)
                     
-                    if self.pawn_images.get(piece) is not None:
-                        screen.blit(self.pawn_images.get(piece), (x, y))
+                    if self.chessboard[row][col] == '-':
+                        continue
+                    else:
+                        if self.chessboard[row][col].pieceType == 'pawn':
+                            screen.blit(self.pawn_images.get(self.chessboard[row][col].color), (x, y))
+                        elif self.chessboard[row][col].pieceType == 'rook':
+                            screen.blit(self.rook_images.get(self.chessboard[row][col].color), (x, y))
+                        elif self.chessboard[row][col].pieceType == 'bishop':
+                            screen.blit(self.bishop_images.get(self.chessboard[row][col].color), (x, y))
+                        elif self.chessboard[row][col].pieceType == 'queen':
+                            screen.blit(self.queen_images.get(self.chessboard[row][col].color), (x, y))
+                        elif self.chessboard[row][col].pieceType == 'king':
+                            screen.blit(self.king_images.get(self.chessboard[row][col].color), (x, y))
+                        elif self.chessboard[row][col].pieceType == 'knight':
+                            screen.blit(self.knight_images.get(self.chessboard[row][col].color), (x, y))
+                    
 
     
     #create screen

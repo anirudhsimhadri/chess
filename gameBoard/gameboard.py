@@ -3,6 +3,11 @@ import sys
 from chessBoardMatrix import ChessBoardMatrix
 from BoardConstants import BoardConstants
 from pawn import Pawn as p
+from bishop import Bishop as b
+from rook import Rook as r
+from knight import Knight as k
+from queen import Queen as q
+from king import King
 Surface = pygame.Surface
 
 pygame.init()
@@ -32,13 +37,49 @@ def main():
     white_pawn = p('white')
     black_pawn = p('black')
 
-    # Place white pawns ('P') on row 1
+    # Place white pawns ('P') on row 6
     for col in range(chessboard_matrix.cols):
-        chessboard_matrix.place_piece(1, col, white_pawn.color)
+        chessboard_matrix.place_piece(6, col, white_pawn)
 
-    # Place black pawns ('p') on row 6
+    # Place black pawns ('p') on row 1
     for col in range(chessboard_matrix.cols):
-        chessboard_matrix.place_piece(6, col, black_pawn.color)
+        chessboard_matrix.place_piece(1, col, black_pawn)
+    
+    #place Rooks
+    black_rook = r('black')
+    white_rook = r('white')
+    chessboard_matrix.place_piece(0, 0, black_rook)
+    chessboard_matrix.place_piece(7, 7, white_rook)
+    chessboard_matrix.place_piece(0, 7, black_rook)
+    chessboard_matrix.place_piece(7, 0, white_rook)
+
+    #place Bishops
+    black_bishop = b('black')
+    white_bishop = b('white')
+    chessboard_matrix.place_piece(0, 1, black_bishop)
+    chessboard_matrix.place_piece(7, 6, white_bishop)
+    chessboard_matrix.place_piece(0, 6, black_bishop)
+    chessboard_matrix.place_piece(7, 1, white_bishop)
+    
+    #place Knights
+    black_knight = k('black')
+    white_knight = k('white')
+    chessboard_matrix.place_piece(0, 2, black_knight)
+    chessboard_matrix.place_piece(7, 5, white_knight)
+    chessboard_matrix.place_piece(0, 5, black_knight)
+    chessboard_matrix.place_piece(7, 2, white_knight)
+    
+    #place Queens
+    black_queen = q('black')
+    white_queen = q('white')
+    chessboard_matrix.place_piece(0, 3, black_queen)
+    chessboard_matrix.place_piece(7, 4, white_queen)
+
+    #place Kings
+    black_king = King('black')
+    white_king = King('white')
+    chessboard_matrix.place_piece(0, 4, black_king)
+    chessboard_matrix.place_piece(7, 3, white_king)
 
     while True:
         for event in pygame.event.get():

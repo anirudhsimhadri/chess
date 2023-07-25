@@ -3,7 +3,7 @@ from BoardConstants import BoardConstants
 
 class Pawn():
     def __init__(self, color:str):
-        self.type = "pawn"
+        self.pieceType = "pawn"
         self.color = color
         self.MaterialValue = 1
         self.hasMoved = False
