@@ -52,7 +52,6 @@ def login_page():
                         loop = False
 
                 elif event.key == pygame.K_BACKSPACE:
-                    # Handle backspace
                     if active_input == "username":
                         username = username[:-1]
                     elif active_input == "password":
@@ -63,7 +62,6 @@ def login_page():
                         ip = ip[:-1]
 
                 else:
-                    # Handles other keypresses:
                     if active_input == "username":
                         username += event.unicode
                     elif active_input == "password":
@@ -83,19 +81,19 @@ def login_page():
 
         # Display input text
         display_text(username, 250, 100)
-        display_text("*" * len(password), 250, 200)  # Display asterisks for password
+        display_text("*" * len(password), 250, 200)
         display_text(port, 250, 300)
         display_text(ip, 250, 400)
 
         # Highlight active input field
         if active_input == "username":
-            pygame.draw.rect(screen, BLACK, (240, 95, 250, 40), 2)  # Username
+            pygame.draw.rect(screen, BLACK, (240, 95, 250, 40), 2)
         if active_input == "password":
-            pygame.draw.rect(screen, BLACK, (240, 195, 250, 40), 2)  # Password
+            pygame.draw.rect(screen, BLACK, (240, 195, 250, 40), 2)
         if active_input == "port":
-            pygame.draw.rect(screen, BLACK, (240, 295, 250, 40), 2)  # Port
+            pygame.draw.rect(screen, BLACK, (240, 295, 250, 40), 2)
         if active_input == "ip":
-            pygame.draw.rect(screen, BLACK, (240, 395, 250, 40), 2)  # IP
+            pygame.draw.rect(screen, BLACK, (240, 395, 250, 40), 2)
 
         pygame.display.update()
     
