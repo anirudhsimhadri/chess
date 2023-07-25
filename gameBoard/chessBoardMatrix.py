@@ -10,35 +10,28 @@ class ChessBoardMatrix:
         self.cols = 8
 
         self.chessboard = [['-'for _ in range(self.cols)] for _ in range(self.rows)]
+        
+        #load images
+        self.pawn_images ={
+            'P': pygame.image.load('chess/1x/w_pawn_1x.png'),
+            'p': pygame.image.load('chess/1x/b_pawn_1x.png')
+        }
+
         self.cs = BoardConstants()
 
     def place_piece(self, row, col, piece):
         self.chessboard[row][col] = piece
 
-
-    """def draw_piece(self, screen: Surface):
+    def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
             for col in range(self.cols):
                 piece = self.chessboard[row][col]
-                if piece != '-':
-                    x = col * SQUARE_SIZE + OFFSET_X + SQUARE_SIZE // 2
-                    y = row * SQUARE_SIZE + OFFSET_Y + SQUARE_SIZE // 2
-                    font = pygame.font.SysFont('Arial', 30)
-                    text_surface = font.render(piece, True, RED)
-                    text_rect = text_surface.get_rect(center=(x, y))
-                    screen.blit(text_surface, text_rect)"""
+                if piece:
+                    x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X)
+                    y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y)
+                    screen.blit(self.pawn_images[piece], (x, y))
 
-    def draw_pieces(self, screen):
-        for row in range(self.rows):
-            for col in range(self.cols):
-                piece = self.chessboard[row][col]
-                x = col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X + self.cs.SQUARE_SIZE // 2
-                y = row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y + self.cs.SQUARE_SIZE // 2
-                if piece == 'P' or piece == 'p':
-                    font = pygame.font.SysFont('Arial', 30)
-                    text_surface = font.render(piece, True, self.cs.BLACK)
-                    text_rect = text_surface.get_rect(center=(x, y))
-                    screen.blit(text_surface, text_rect)
+    
     #create screen
     def draw_chessboard(self, screen: Surface):
         for row in range(8):

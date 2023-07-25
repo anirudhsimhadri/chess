@@ -1,8 +1,7 @@
-from chesspiece import ChessPiece
 import pygame
 from BoardConstants import BoardConstants
 
-class Pawn(ChessPiece):
+class Pawn():
     def __init__(self, color:str):
         self.type = "pawn"
         self.color = color
