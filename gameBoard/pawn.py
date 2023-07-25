@@ -9,9 +9,9 @@ class Pawn():
         self.hasMoved = False
 
         if self.color == "white":
-            self.image = pygame.image.load('chess/1x/w_pawn_1x.png')
+            self.image = pygame.image.load('white_pawn.png').convert_alpha()
         elif self.color == "black":
-            self.image = pygame.image.load('chess/1x/b_pawn_1x.png')
+            self.image = pygame.image.load('black_pawn.png').convert_alpha()
         
         self.cs = BoardConstants()
 

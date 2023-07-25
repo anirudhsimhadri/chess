@@ -13,8 +13,28 @@ class ChessBoardMatrix:
         
         #load images
         self.pawn_images ={
-            'P': pygame.image.load('chess/1x/w_pawn_1x.png'),
-            'p': pygame.image.load('chess/1x/b_pawn_1x.png')
+            'white': pygame.image.load('white_pawn.png').convert_alpha(),
+            'black': pygame.image.load('black_pawn.png').convert_alpha()
+        }
+        self.rook_images ={
+            'white': pygame.image.load('white_rook.png').convert_alpha(),
+            'black': pygame.image.load('black_rook.png').convert_alpha()
+        }
+        self.bishop_images ={
+            'white': pygame.image.load('white_bishop.png').convert_alpha(),
+            'black': pygame.image.load('black_bishop.png').convert_alpha()
+        }
+        self.queen_images ={
+            'white': pygame.image.load('white_queen.png').convert_alpha(),
+            'black': pygame.image.load('black_queen.png').convert_alpha()
+        }
+        self.king_images ={
+            'white': pygame.image.load('white_king.png').convert_alpha(),
+            'black': pygame.image.load('black_king.png').convert_alpha()
+        }
+        self.knight_images ={
+            'white': pygame.image.load('white_knight.png').convert_alpha(),
+            'black': pygame.image.load('black_knight.png').convert_alpha()
         }
 
         self.cs = BoardConstants()
@@ -29,7 +49,9 @@ class ChessBoardMatrix:
                 if piece:
                     x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X)
                     y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y)
-                    screen.blit(self.pawn_images[piece], (x, y))
+                    
+                    if self.pawn_images.get(piece) is not None:
+                        screen.blit(self.pawn_images.get(piece), (x, y))
 
     
     #create screen

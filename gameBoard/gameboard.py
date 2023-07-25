@@ -2,6 +2,7 @@ import pygame
 import sys
 from chessBoardMatrix import ChessBoardMatrix
 from BoardConstants import BoardConstants
+from pawn import Pawn as p
 Surface = pygame.Surface
 
 pygame.init()
@@ -33,11 +34,11 @@ def main():
 
     # Place white pawns ('P') on row 1
     for col in range(chessboard_matrix.cols):
-        chessboard_matrix.place_piece(1, col, white_pawn)
+        chessboard_matrix.place_piece(1, col, white_pawn.color)
 
     # Place black pawns ('p') on row 6
     for col in range(chessboard_matrix.cols):
-        chessboard_matrix.place_piece(6, col, black_pawn)
+        chessboard_matrix.place_piece(6, col, black_pawn.color)
 
     while True:
         for event in pygame.event.get():
