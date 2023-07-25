@@ -37,7 +37,7 @@ def login_page():
     while loop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                loop = False
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -48,7 +48,7 @@ def login_page():
                     elif active_input == "port":
                         active_input = "ip"
                     elif active_input == "ip":
-                        break
+                        loop = False
 
                 elif event.key == pygame.K_BACKSPACE:
                     # Handle backspace
