@@ -1,6 +1,6 @@
 from chesspiece import ChessPiece
 import pygame
-
+from BoardConstants import BoardConstants
 
 class Pawn(ChessPiece):
     def __init__(self, color:str):
@@ -13,25 +13,34 @@ class Pawn(ChessPiece):
             self.image = pygame.image.load('chess/1x/w_pawn_1x.png')
         elif self.color == "black":
             self.image = pygame.image.load('chess/1x/b_pawn_1x.png')
-    
-    def __str__(self):
-        return "pawn" if self.color == "white" else "p"
-    
-    def valid_move(self, start_row, start_col, end_row, end_col, is_capture):
-        direction = 1 if self.color == "white" else -1
-        row_diff = end_row - start_row
-        col_diff = abs(end_col - start_col)
+        
+        self.cs = BoardConstants()
 
-        if is_capture:
-            #Pawn capturing diagonally
-            return row_diff == direction and col_diff == 1
-        else:
-            if not self.hasMoved:
-                #First move pawns may move two squares forward
-                return (row_diff == 2 * direction or row_diff == direction) and col_diff == 0
-            else:
-                return row_diff == direction and col_diff == 0
-
+        self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
+    
+    def move(self, row, col, target_row, target_col):
+        #Move the pawn to the target location
+        self.row = target_row
+        self.col = target_col
+        self.hasMoved = True #set to True so the pawn cant move two squares forward
+    
+    def valid_move(self, row, col, target_row, target_col):
+        #Check if the pawn can move to the target location
+        if self.color == "white":
+            if target_row == row - 1 and target_col == col and not self.hasMoved:
+                return True
+            elif target_row == row - 1 and target_col == col and not self.chessboard[target_row][target_col]:
+                return True
+            elif target_row == row - 1 and abs(target_col - col) == 1 and self.chessboard[target_row][target_col] and self.chessboard[target_row][target_col].color != self.color:
+                return True
+        elif self.color == "black":
+            if target_row == row + 1 and target_col == col and not self.hasMoved:
+                return True
+            elif target_row == row + 1 and target_col == col and not self.chessboard[target_row][target_col]:
+                return True
+            elif target_row == row + 1 and abs(target_col - col) == 1 and self.chessboard[target_row][target_col] and self.chessboard[target_row][target_col].color!= self.color:
+                return True
+        return False
     def en_pessant(self, x, y):
         """"pawn en pessant capability"""
         
