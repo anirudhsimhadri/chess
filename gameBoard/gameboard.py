@@ -1,6 +1,7 @@
 import pygame
-from pygame import Surface
 import sys
+
+Surface = pygame.Surface
 
 pygame.init()
 
