@@ -14,10 +14,10 @@ def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:
         raise BadConnection
     
     conn.send(b"user")
-    username: str = str(conn.recv(32))
+    username: str = conn.recv(32).decode()
     
     conn.send(b"pass")
-    playerPassword: str = str(conn.recv(32))
+    playerPassword: str = conn.recv(32).decode()
     if playerPassword != password:
         conn.send(b"badpass!")
         conn.close()
