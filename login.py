@@ -1,5 +1,6 @@
 import pygame
 import sys
+import client.main
 
 # Initialize Pygame
 pygame.init()
@@ -98,7 +99,7 @@ def login_page():
 
         pygame.display.update()
     
-    "connect to server"
+    client.main.connectToServer(ip, int(port), username, password)
 
     pygame.quit()
     sys.exit()
