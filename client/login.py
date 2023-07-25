@@ -23,7 +23,6 @@ def display_text(text, x, y):
     rendered_text = font.render(text, True, BLACK)
     screen.blit(rendered_text, (x, y))
 
-
 # Main game loop
 def login_page():
     loop = True
