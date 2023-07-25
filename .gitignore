@@ -1,3 +1,6 @@
+.vscode/
+**/__pycache__/
+
 # login wireframe
 login_wireframe.py
 
