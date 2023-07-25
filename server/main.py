@@ -31,13 +31,14 @@ def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:
 def serve(port: int, password: str):
     sock: Socket = Socket()
     sock.bind(("0.0.0.0", port))
+    sock.listen()
+
     print(
         "Serving at address {} on port {}".format(
             socket.gethostbyname(socket.getfqdn()),
             port
         )
     )
-    sock.listen()
 
     p1Conn: Socket | None = None
     p1Name: str | None = None
