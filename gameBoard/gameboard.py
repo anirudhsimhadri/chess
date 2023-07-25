@@ -1,4 +1,5 @@
 import pygame
+from pygame import Surface
 import sys
 
 pygame.init()
@@ -38,7 +39,7 @@ class ChessboardMatrix:
     def place_piece(self, row, col, piece):
         self.chessboard[row][col] = piece
 
-    def draw_piece(self, screen):
+    def draw_piece(self, screen: Surface):
         for row in range(self.rows):
             for col in range(self.cols):
                 piece = self.chessboard[row][col]
@@ -51,14 +52,14 @@ class ChessboardMatrix:
                     screen.blit(text_surface, text_rect)
     
     #create screen
-    def draw_chessboard(self, screen):
+    def draw_chessboard(self, screen: Surface):
         for row in range(8):
             for col in range(8):
                 color = WHITE if (row + col) % 2 == 0 else BLACK
                 pygame.draw.rect(screen, color, (col * SQUARE_SIZE + OFFSET_X, row * SQUARE_SIZE + OFFSET_Y, SQUARE_SIZE, SQUARE_SIZE))
 
 
-def draw_tracking_boxes(screen):
+def draw_tracking_boxes(screen: Surface):
     """Draws the material tracking boxes on the screen"""
 
     #top tracking box
@@ -67,7 +68,7 @@ def draw_tracking_boxes(screen):
     #bottom tracking box
     pygame.draw.rect(screen, BLUE, (OFFSET_X, WINDOW_SIZE - BOX_HEIGHT, BOX_WIDTH, BOX_HEIGHT))
         
-def draw_border(screen):
+def draw_border(screen: Surface):
     """Draws the border around the important screen elements"""
     pygame.draw.rect(screen, BLACK, (OFFSET_X, OFFSET_Y, BOARD_SIZE, BOARD_SIZE), 5)
     pygame.draw.rect(screen, BLACK, (OFFSET_X- 4, OFFSET_Y - 130, BOX_WIDTH + 8, BOX_HEIGHT + 8), 5)
