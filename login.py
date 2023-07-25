@@ -25,24 +25,30 @@ def display_text(text, x, y):
 
 # Main game loop
 def login_page():
+    loop = True
+
     username = ""
     password = ""
     port = ""
     ip = ""
 
-    while True:
+    active_input = "username"
+
+    while loop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+                break
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    # login validation logic
-                    print(f"Username: {username}")
-                    print(f"Password: {password}")
-                    print(f"Port: {port}")
-                    print(f"IP: {ip}")
+                    if active_input == "username":
+                        active_input = "password"
+                    elif active_input == "password":
+                        active_input = "port"
+                    elif active_input == "port":
+                        active_input = "ip"
+                    elif active_input == "ip":
+                        break
 
                 elif event.key == pygame.K_BACKSPACE:
                     # Handle backspace
@@ -81,14 +87,21 @@ def login_page():
         display_text(ip, 250, 400)
 
         # Highlight active input field
-        active_input = "username"
-        pygame.draw.rect(screen, BLACK, (240, 95, 250, 40), 2)  # Username
+        if active_input == "username":
+            pygame.draw.rect(screen, BLACK, (240, 95, 250, 40), 2)  # Username
         if active_input == "password":
             pygame.draw.rect(screen, BLACK, (240, 195, 250, 40), 2)  # Password
-        pygame.draw.rect(screen, BLACK, (240, 295, 250, 40), 2)  # Port
-        pygame.draw.rect(screen, BLACK, (240, 395, 250, 40), 2)  # IP
+        if active_input == "port":
+            pygame.draw.rect(screen, BLACK, (240, 295, 250, 40), 2)  # Port
+        if active_input == "ip":
+            pygame.draw.rect(screen, BLACK, (240, 395, 250, 40), 2)  # IP
 
         pygame.display.update()
+    
+    "connect to server"
+
+    pygame.quit()
+    sys.exit()
 
 if __name__ == "__main__":
     login_page()
