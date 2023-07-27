@@ -1,15 +1,19 @@
 import pygame
 import sys
 from BoardConstants import BoardConstants
+from bishop import Bishop
 Surface = pygame.Surface
+from typedef import ChessPiece
 
 class ChessBoardMatrix:
+    chessboard: list[list[ChessPiece | None]]
+
     def __init__(self):
         #define the rows and columns of the matrix
         self.rows = 8
         self.cols = 8
 
-        self.chessboard = [['-'for _ in range(self.cols)] for _ in range(self.rows)]
+        self.chessboard = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         
         #load images
         self.pawn_images ={
@@ -49,7 +53,7 @@ class ChessBoardMatrix:
                     x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X + 5)
                     y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y + 5)
                     
-                    if self.chessboard[row][col] == '-':
+                    if self.chessboard[row][col] == None:
                         continue
                     else:
                         if self.chessboard[row][col].pieceType == 'pawn':
