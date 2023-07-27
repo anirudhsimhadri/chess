@@ -26,7 +26,7 @@ class Bishop():
         matrix: ChessBoardMatrix
     ) -> bool:
         row_diff = end_row - start_row
-        col_diff = abs(end_col - start_col)
+        col_diff = end_col - start_col
 
         if abs(row_diff) != abs(col_diff): return False
         if end_row >= 8 or end_col >= 8: return False

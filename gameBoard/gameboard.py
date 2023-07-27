@@ -99,6 +99,7 @@ def main():
 
                     if selected_square is None:
                         selected_square = (clicked_row, clicked_col)
+                        print(selected_square)
                         selected_piece = chessboard_matrix.chessboard[selected_square[0]][selected_square[1]]
                         if selected_piece == None:
                             selected_square = None
