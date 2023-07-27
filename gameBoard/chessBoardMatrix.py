@@ -1,9 +1,13 @@
 import pygame
 import sys
 from BoardConstants import BoardConstants
+from bishop import Bishop
 Surface = pygame.Surface
+from typedef import ChessPiece
 
 class ChessBoardMatrix:
+    chessboard: list[list[ChessPiece | None]]
+
     def __init__(self):
         #define the rows and columns of the matrix
         self.rows = 8
