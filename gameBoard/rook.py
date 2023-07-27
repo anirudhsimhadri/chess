@@ -6,6 +6,11 @@ class Rook():
         self.pieceType = "rook"
         self.color = color
         self.MaterialValue = 5
+
+        if self.color == "white":
+            self.image = pygame.image.load('white_rook.png').convert_alpha()
+        elif self.color == "black":
+            self.image = pygame.image.load('black_rook.png').convert_alpha()
         
         self.cs = BoardConstants()
 

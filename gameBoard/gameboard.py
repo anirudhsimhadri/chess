@@ -95,17 +95,18 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     mouse_x, mouse_y = event.pos
-                    clicked_row, clicked_col = mouse_y // cs.SQUARE_SIZE, mouse_x // cs.SQUARE_SIZE
+                    clicked_row, clicked_col = (mouse_y - cs.OFFSET_Y) // cs.SQUARE_SIZE, mouse_x // cs.SQUARE_SIZE
 
                     if selected_square is None:
                         selected_square = (clicked_row, clicked_col)
-                        selected_piece = chessboard_matrix.chessboard[*selected_square]
+                        selected_piece = chessboard_matrix.chessboard[selected_square[0]][selected_square[1]]
                         if selected_piece == None:
                             selected_square = None
                         
                     else:
-                        if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, chessboard_matrix.chessboard):
-                            selected_piece.move(*selected_square, clicked_row, clicked_col)
+                        if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, chessboard_matrix):
+                            chessboard_matrix.chessboard[selected_square[0]][selected_square[1]] = None
+                            chessboard_matrix.chessboard[clicked_row][clicked_col] = selected_piece
                         #clear the selected square
                         selected_square = None
                         selected_piece = None

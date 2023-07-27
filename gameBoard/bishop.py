@@ -23,7 +23,7 @@ class Bishop():
         start_col,
         end_row,
         end_col,
-        mat: ChessBoardMatrix
+        matrix: ChessBoardMatrix
     ) -> bool:
         row_diff = end_row - start_row
         col_diff = abs(end_col - start_col)
@@ -37,13 +37,13 @@ class Bishop():
         )
         pos = start_row, start_col
 
-        for i in range(1, row_diff):
+        for i in range(1, abs(row_diff)):
             pos = (
                 pos[0] + dir[0],
                 pos[1] + dir[1]
             )
 
-            if mat.chessboard[pos[0]][pos[1]] != None:
+            if matrix.chessboard[pos[0]][pos[1]] != None:
                 return False
 
         return True
