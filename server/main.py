@@ -1,5 +1,7 @@
-from typing import Tuple, List
-from socket import socket as Socket
+from typing import Tuple
+import socket
+
+Socket = socket.socket
 
 class BadConnection(BaseException): pass
 class PasswordMismatch(BaseException): pass
@@ -14,10 +16,10 @@ def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:
         raise BadConnection
     
     conn.send(b"user")
-    username: str = str(conn.recv(32))
+    username: str = conn.recv(32).decode()
     
     conn.send(b"pass")
-    playerPassword: str = str(conn.recv(32))
+    playerPassword: str = conn.recv(32).decode()
     if playerPassword != password:
         conn.send(b"badpass!")
         conn.close()
@@ -30,6 +32,13 @@ def serve(port: int, password: str):
     sock: Socket = Socket()
     sock.bind(("0.0.0.0", port))
     sock.listen()
+
+    print(
+        "Serving at address {} on port {}".format(
+            socket.gethostbyname(socket.getfqdn()),
+            port
+        )
+    )
 
     p1Conn: Socket | None = None
     p1Name: str | None = None
@@ -61,3 +70,5 @@ def serve(port: int, password: str):
             continue
     
     print("P2 connected with name {}".format(p2Name))
+
+if __name__ == "__main__": serve(4567, "password")

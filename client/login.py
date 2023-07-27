@@ -1,5 +1,6 @@
 import pygame
 import sys
+import connect
 
 # Initialize Pygame
 pygame.init()
@@ -15,13 +16,12 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Load the font
-font = pygame.font.Font(None, 30)
+font = pygame.font.SysFont("Arial", 30)
 
 # Function to display text on the screen
 def display_text(text, x, y):
     rendered_text = font.render(text, True, BLACK)
     screen.blit(rendered_text, (x, y))
-
 
 # Main game loop
 def login_page():
@@ -37,7 +37,7 @@ def login_page():
     while loop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                break
+                loop = False
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -48,10 +48,9 @@ def login_page():
                     elif active_input == "port":
                         active_input = "ip"
                     elif active_input == "ip":
-                        break
+                        loop = False
 
                 elif event.key == pygame.K_BACKSPACE:
-                    # Handle backspace
                     if active_input == "username":
                         username = username[:-1]
                     elif active_input == "password":
@@ -62,7 +61,6 @@ def login_page():
                         ip = ip[:-1]
 
                 else:
-                    # Handles other keypresses:
                     if active_input == "username":
                         username += event.unicode
                     elif active_input == "password":
@@ -82,23 +80,23 @@ def login_page():
 
         # Display input text
         display_text(username, 250, 100)
-        display_text("*" * len(password), 250, 200)  # Display asterisks for password
+        display_text("*" * len(password), 250, 200)
         display_text(port, 250, 300)
         display_text(ip, 250, 400)
 
         # Highlight active input field
         if active_input == "username":
-            pygame.draw.rect(screen, BLACK, (240, 95, 250, 40), 2)  # Username
+            pygame.draw.rect(screen, BLACK, (240, 95, 250, 40), 2)
         if active_input == "password":
-            pygame.draw.rect(screen, BLACK, (240, 195, 250, 40), 2)  # Password
+            pygame.draw.rect(screen, BLACK, (240, 195, 250, 40), 2)
         if active_input == "port":
-            pygame.draw.rect(screen, BLACK, (240, 295, 250, 40), 2)  # Port
+            pygame.draw.rect(screen, BLACK, (240, 295, 250, 40), 2)
         if active_input == "ip":
-            pygame.draw.rect(screen, BLACK, (240, 395, 250, 40), 2)  # IP
+            pygame.draw.rect(screen, BLACK, (240, 395, 250, 40), 2)
 
         pygame.display.update()
     
-    "connect to server"
+    connect.connectToServer(ip, int(port), username, password)
 
     pygame.quit()
     sys.exit()
