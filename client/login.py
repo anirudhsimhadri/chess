@@ -16,7 +16,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 # Load the font
-font = pygame.font.Font("Arial", 30)
+font = pygame.font.SysFont("Arial", 30)
 
 # Function to display text on the screen
 def display_text(text, x, y):
