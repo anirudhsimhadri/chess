@@ -9,7 +9,7 @@ class ChessBoardMatrix:
         self.rows = 8
         self.cols = 8
 
-        self.chessboard = [['-'for _ in range(self.cols)] for _ in range(self.rows)]
+        self.chessboard = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         
         #load images
         self.pawn_images ={
@@ -49,7 +49,7 @@ class ChessBoardMatrix:
                     x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X)
                     y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y)
                     
-                    if self.chessboard[row][col] == '-':
+                    if self.chessboard[row][col] == None:
                         continue
                     else:
                         if self.chessboard[row][col].pieceType == 'pawn':
