@@ -19,10 +19,10 @@ class Bishop():
 
     def is_valid_move(
         self,
-        start_row,
-        start_col,
-        end_row,
-        end_col,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int,
         matrix: ChessBoardMatrix
     ) -> bool:
         row_diff = end_row - start_row
@@ -45,5 +45,8 @@ class Bishop():
 
             if matrix.chessboard[pos[0]][pos[1]] != None:
                 return False
+        
+        cap = matrix.chessboard[end_row][end_col]
+        if cap != None and cap.color == self.color: return False
 
         return True
