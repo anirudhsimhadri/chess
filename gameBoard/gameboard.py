@@ -25,8 +25,8 @@ def draw_tracking_boxes(screen: Surface):
 def draw_border(screen: Surface):
     """Draws the border around the important screen elements"""
     pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X, cs.OFFSET_Y, cs.BOARD_SIZE, cs.BOARD_SIZE), 5)
-    pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X- 4, cs.OFFSET_Y - 150, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
-    pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
+    #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X- 4, cs.OFFSET_Y - 150, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
+    #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
 
 def main():
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
@@ -73,13 +73,13 @@ def main():
     black_queen = q('black')
     white_queen = q('white')
     chessboard_matrix.place_piece(0, 3, black_queen)
-    chessboard_matrix.place_piece(7, 4, white_queen)
+    chessboard_matrix.place_piece(7, 3, white_queen)
 
     #place Kings
     black_king = King('black')
     white_king = King('white')
     chessboard_matrix.place_piece(0, 4, black_king)
-    chessboard_matrix.place_piece(7, 3, white_king)
+    chessboard_matrix.place_piece(7, 4, white_king)
 
     while True:
         for event in pygame.event.get():
@@ -88,7 +88,7 @@ def main():
                 sys.exit()
         
         #fill the screen edges
-        screen.fill(cs.RED)
+        screen.fill(cs.BLACK)
 
         #Draw the chessboard
         chessboard_matrix.draw_chessboard(screen)

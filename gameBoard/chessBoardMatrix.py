@@ -46,8 +46,8 @@ class ChessBoardMatrix:
         for row in range(self.rows):
             for col in range(self.cols):
                 if self.chessboard[row][col]:
-                    x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X)
-                    y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y)
+                    x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X + 5)
+                    y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y + 5)
                     
                     if self.chessboard[row][col] == '-':
                         continue

@@ -3,7 +3,7 @@ from BoardConstants import BoardConstants
 
 class King():
     def __init__(self, color:str):
-        self.pieceType = "King"
+        self.pieceType = "king"
         self.color = color
         self.MaterialValue = 99
         self.hasMoved = False
