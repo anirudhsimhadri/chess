@@ -6,11 +6,20 @@ class Rook():
         self.pieceType = "rook"
         self.color = color
         self.MaterialValue = 5
+<<<<<<< HEAD
+=======
+
+        if self.color == "white":
+            self.image = pygame.image.load('white_rook.png').convert_alpha()
+        elif self.color == "black":
+            self.image = pygame.image.load('black_rook.png').convert_alpha()
+>>>>>>> 9fec68796a77715facef9dd2698894fed4b43948
         
         self.cs = BoardConstants()
 
         self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
     
+<<<<<<< HEAD
     def move(self, row, col, target_row, target_col):
         self.row = target_row
         self.col = target_col
@@ -39,3 +48,7 @@ class Rook():
 
         # if we're here, then all conditions have been satisfied
         return True
+=======
+    def move(self, x, y):
+        """Rook move funtion"""
+>>>>>>> 9fec68796a77715facef9dd2698894fed4b43948
