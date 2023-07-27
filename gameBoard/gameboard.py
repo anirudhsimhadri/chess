@@ -24,9 +24,12 @@ def draw_tracking_boxes(screen: Surface):
         
 def draw_border(screen: Surface):
     """Draws the border around the important screen elements"""
+
+    #chessboard bounds
     pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X, cs.OFFSET_Y, cs.BOARD_SIZE, cs.BOARD_SIZE), 5)
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X- 4, cs.OFFSET_Y - 150, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
+
 
 def main():
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
@@ -81,11 +84,32 @@ def main():
     chessboard_matrix.place_piece(0, 4, black_king)
     chessboard_matrix.place_piece(7, 4, white_king)
 
+    selected_square = None
+    selected_piece = None
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    mouse_x, mouse_y = event.pos
+                    clicked_row, clicked_col = mouse_y // cs.SQUARE_SIZE, mouse_x // cs.SQUARE_SIZE
+
+                    if selected_square is None:
+                        selected_square = (clicked_row, clicked_col)
+                        selected_piece = chessboard_matrix.chessboard[*selected_square]
+                        if selected_piece == None:
+                            selected_square = None
+                        
+                    else:
+                        if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, chessboard_matrix.chessboard):
+                            selected_piece.move(*selected_square, clicked_row, clicked_col)
+                        #clear the selected square
+                        selected_square = None
+                        selected_piece = None
+                            
         
         #fill the screen edges
         screen.fill(cs.BLACK)

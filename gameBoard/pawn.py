@@ -17,13 +17,12 @@ class Pawn():
 
         self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
     
-    def move(self, row, col, target_row, target_col):
+    def move(self, target_row, target_col):
         #Move the pawn to the target location
-        self.row = target_row
-        self.col = target_col
+        if is_valid_move()
         self.hasMoved = True #set to True so the pawn cant move two squares forward
     
-    def valid_move(self, row, col, target_row, target_col):
+    def is_valid_move(self, row, col, target_row, target_col):
         #Check if the pawn can move to the target location
         if self.color == "white":
             if target_row == row - 1 and target_col == col and not self.hasMoved:

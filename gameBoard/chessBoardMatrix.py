@@ -1,12 +1,11 @@
 import pygame
 import sys
 from BoardConstants import BoardConstants
-from bishop import Bishop
 Surface = pygame.Surface
-from typedef import ChessPiece
+
 
 class ChessBoardMatrix:
-    chessboard: list[list[ChessPiece | None]]
+    #lchessboard: list[list[ChessPiece | None]]
 
     def __init__(self):
         #define the rows and columns of the matrix
@@ -49,25 +48,26 @@ class ChessBoardMatrix:
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
             for col in range(self.cols):
-                if self.chessboard[row][col]:
+                piece = self.chessboard[row][col]
+                if piece:
                     x = (col * self.cs.SQUARE_SIZE + self.cs.OFFSET_X + 5)
                     y = (row * self.cs.SQUARE_SIZE + self.cs.OFFSET_Y + 5)
                     
-                    if self.chessboard[row][col] == None:
+                    if piece == None:
                         continue
                     else:
-                        if self.chessboard[row][col].pieceType == 'pawn':
-                            screen.blit(self.pawn_images.get(self.chessboard[row][col].color), (x, y))
-                        elif self.chessboard[row][col].pieceType == 'rook':
-                            screen.blit(self.rook_images.get(self.chessboard[row][col].color), (x, y))
-                        elif self.chessboard[row][col].pieceType == 'bishop':
-                            screen.blit(self.bishop_images.get(self.chessboard[row][col].color), (x, y))
-                        elif self.chessboard[row][col].pieceType == 'queen':
-                            screen.blit(self.queen_images.get(self.chessboard[row][col].color), (x, y))
-                        elif self.chessboard[row][col].pieceType == 'king':
-                            screen.blit(self.king_images.get(self.chessboard[row][col].color), (x, y))
-                        elif self.chessboard[row][col].pieceType == 'knight':
-                            screen.blit(self.knight_images.get(self.chessboard[row][col].color), (x, y))
+                        if piece.pieceType == 'pawn':
+                            screen.blit(self.pawn_images.get(piece.color), (x, y))
+                        elif piece.pieceType == 'rook':
+                            screen.blit(self.rook_images.get(piece.color), (x, y))
+                        elif piece.pieceType == 'bishop':
+                            screen.blit(self.bishop_images.get(piece.color), (x, y))
+                        elif piece.pieceType == 'queen':
+                            screen.blit(self.queen_images.get(piece.color), (x, y))
+                        elif piece.pieceType == 'king':
+                            screen.blit(self.king_images.get(piece.color), (x, y))
+                        elif piece.pieceType == 'knight':
+                            screen.blit(self.knight_images.get(piece.color), (x, y))
                     
 
     

@@ -17,7 +17,7 @@ class Bishop():
 
         self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
 
-    def valid_move(
+    def is_valid_move(
         self,
         start_row,
         start_col,
