@@ -1,8 +1,16 @@
-from bishop import Bishop
-from king import King
-from knight import Knight
-from pawn import Pawn
-from queen import Queen
-from rook import Rook
+from typing import Literal, Any
 
-ChessPiece = Bishop | King | Knight | Pawn | Queen | Rook
+class ChessPiece:
+    """Common interface for all pieces (DONT INHERIT)"""
+    color: Literal["white", "black"]
+    MaterialValue: int
+
+    def is_valid_move(
+        self,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int,
+        matrix: Any # Just trying to avoid a circular import
+    ) -> bool:
+        return False
