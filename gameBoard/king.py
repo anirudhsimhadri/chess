@@ -1,5 +1,6 @@
 import pygame
 from BoardConstants import BoardConstants
+from chessBoardMatrix import ChessBoardMatrix
 
 class King():
     def __init__(self, color:str):
@@ -23,3 +24,20 @@ class King():
     def castle(self, x, y):
         """Kings castle funtion"""
         
+    def is_valid_move(
+        self,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int,
+        matrix: ChessBoardMatrix
+    ) -> bool:
+        row_diff = end_row - start_row
+        col_diff = end_col - start_col
+        
+        if abs(row_diff) > 1 or abs(col_diff) > 1: return False
+
+        cap = matrix.chessboard[end_row][end_col]
+        if cap != None and cap.color == self.color: return False
+        
+        return True
