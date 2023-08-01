@@ -35,3 +35,10 @@ class ChessPiece:
         matrix: ChessBoardMatrix
     ) -> bool:
         return False
+    
+    def all_valid_moves(
+        self,
+        start_row: int,
+        start_col: int
+    ) -> list[tuple[int, int]]:
+        return []
