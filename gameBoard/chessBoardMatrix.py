@@ -1,9 +1,9 @@
 import pygame
 import sys
 from BoardConstants import BoardConstants
-from typedef import ChessPiece, unwrap
+from typedef import ChessPiece, unwrap, ChessBoardMatrix as Cbm
+from typing import cast
 Surface = pygame.Surface
-
 
 class ChessBoardMatrix:
     chessboard: list[list[ChessPiece | None]]
@@ -45,6 +45,55 @@ class ChessBoardMatrix:
 
     def place_piece(self, row, col, piece):
         self.chessboard[row][col] = piece
+    
+    def is_king_in_check(self, color: str) -> bool:
+        king_pos = (99, 99) # obvious dummy value
+        for row in range(self.rows):
+            for col in range(self.cols):
+                piece = self.chessboard[row][col]
+                if piece is not None and piece.pieceType == "king" and piece.color == color:
+                    king_pos = (row, col)
+        
+        for row in range(self.rows):
+            for col in range(self.cols):
+                piece = self.chessboard[row][col]
+                # Hacky way to get around incomplete move validation
+                if piece is not None and callable(getattr(piece, "is_valid_move", None)):
+                    if piece.is_valid_move(row, col, *king_pos, cast(Cbm, self)):
+                        return True
+        
+        return False
+    
+    def is_checkmate(self, color: str) -> bool:
+        """
+        Check if the specified color is in checkmate.
+        This function will likely be very expensive,
+        so some preliminary checks should run beforehand
+        """
+        return False
+    
+    def move(
+        self,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int,
+    ):
+        """Does the heavy lifting for actually moving pieces"""
+        self.chessboard[end_row][end_col] = self.chessboard[start_row][start_col]
+        self.chessboard[start_row][start_col] = None
+    
+    def undo_move(
+        self,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int,
+        captured_piece: ChessPiece | None
+    ):
+        """inverse to `move()`"""
+        self.chessboard[start_row][start_col] = self.chessboard[end_row][end_col]
+        self.chessboard[end_row][end_col] = captured_piece
 
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):

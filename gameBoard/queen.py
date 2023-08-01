@@ -1,5 +1,6 @@
 import pygame
 from BoardConstants import BoardConstants
+from chessBoardMatrix import ChessBoardMatrix as cbm
 
 class Queen():
     def __init__(self, color:str):

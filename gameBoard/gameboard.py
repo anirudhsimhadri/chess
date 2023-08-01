@@ -8,6 +8,8 @@ from rook import Rook as r
 from knight import Knight as k
 from queen import Queen as q
 from king import King
+from typedef import ChessPiece, ChessBoardMatrix as Cbm
+from typing import cast
 Surface = pygame.Surface
 
 pygame.init()
@@ -84,8 +86,8 @@ def main():
     chessboard_matrix.place_piece(0, 4, black_king)
     chessboard_matrix.place_piece(7, 4, white_king)
 
-    selected_square = None
-    selected_piece = None
+    selected_square: tuple[int, int] | None = None
+    selected_piece: ChessPiece | None = None
 
     while True:
         for event in pygame.event.get():
@@ -107,9 +109,17 @@ def main():
                                 selected_square = None
                             
                         else:
-                            if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, chessboard_matrix):
-                                chessboard_matrix.chessboard[selected_square[0]][selected_square[1]] = None
-                                chessboard_matrix.chessboard[clicked_row][clicked_col] = selected_piece
+                            assert selected_piece is not None
+
+                            target = chessboard_matrix.chessboard[clicked_row][clicked_col]
+                            print(target)
+
+                            if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, cast(Cbm, chessboard_matrix)):
+                                chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                            
+                            if chessboard_matrix.is_king_in_check(selected_piece.color):
+                                chessboard_matrix.undo_move(*selected_square, clicked_row, clicked_col, target)
+
                             #clear the selected square
                             selected_square = None
                             selected_piece = None

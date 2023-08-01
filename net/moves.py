@@ -2,10 +2,10 @@
 Sending moves between server and client
 
 Moves are sent in a uniform fixed-length format (always 4 bytes):
-Starting rank (1 byte, '1'..'8' ascii)
-Starting file (1 byte, 'a'..'h' ascii)
-Ending rank (1 byte, '1'..'8' ascii)
-Ending file (1 byte, 'a'..'h' ascii)
+Starting row (1 byte, '1'..'8' ascii)
+Starting col (1 byte, 'a'..'h' ascii)
+Ending row (1 byte, '1'..'8' ascii)
+Ending col (1 byte, 'a'..'h' ascii)
 
 Neither side of the connection should ever send or receive 2 moves back to back
 A typical connection should look like:
@@ -22,15 +22,15 @@ from typing import Tuple
 from socket import socket as Socket
 
 def serializeCoord(coord: Tuple[int, int]) -> bytes:
-    rank, file = coord
+    row, col = coord
 
-    return bytes([ord(b'1') + rank]) + bytes([ord(b'a') + file])
+    return bytes([ord(b'1') + row]) + bytes([ord(b'a') + col])
 
 def deserializeCoord(ser: bytes) -> Tuple[int, int]:
-    rank = ser[0] - ord(b'1')
-    file = ser[1] - ord(b'a')
+    row = ser[0] - ord(b'1')
+    col = ser[1] - ord(b'a')
 
-    return rank, file
+    return row, col
 
 def sendMove(conn: Socket, start_pos: Tuple[int, int], end_pos: Tuple[int, int]):
     conn.send(serializeCoord(start_pos) + serializeCoord(end_pos))
