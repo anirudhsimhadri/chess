@@ -8,6 +8,7 @@ from rook import Rook as r
 from knight import Knight as k
 from queen import Queen as q
 from king import King
+from typedef import ChessPiece
 Surface = pygame.Surface
 
 pygame.init()
@@ -84,8 +85,8 @@ def main():
     chessboard_matrix.place_piece(0, 4, black_king)
     chessboard_matrix.place_piece(7, 4, white_king)
 
-    selected_square = None
-    selected_piece = None
+    selected_square: tuple[int, int] | None = None
+    selected_piece: ChessPiece | None = None
 
     while True:
         for event in pygame.event.get():
