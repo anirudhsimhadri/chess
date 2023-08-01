@@ -120,10 +120,7 @@ def main():
                             if chessboard_matrix.is_king_in_check(selected_piece.color):
                                 chessboard_matrix.undo_move(*selected_square, clicked_row, clicked_col, target)
                             
-                            def inverse_color(color: str) -> str:
-                                return "black" if color == "white" else "white"
-                            
-                            opp_color = inverse_color(selected_piece.color)
+                            opp_color = "white" if selected_piece.color == "black" else "black"
 
                             if chessboard_matrix.is_checkmate(opp_color):
                                 print(f"checkmate for {opp_color}")
