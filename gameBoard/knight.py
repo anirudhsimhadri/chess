@@ -24,21 +24,14 @@ class Knight():
         location = (matrix.chessboard[target_row][target_col] == None or matrix.chessboard[target_row][target_col].color != matrix.chessboard[row][col].color)
 
         #checking if the designated location is valid according to knights movement rules
-        if target_col == col - 1 and target_row == row + 2 and (location):
-            return True
-        elif target_col == col - 1 and target_row == row - 2 and (location):
-            return True
-        elif target_col == col - 2 and target_row == row + 1 and (location):
-            return True
-        elif target_col == col - 2 and target_row == row - 1 and (location):
-            return True
-        elif target_col == col + 1 and target_row == row + 2 and (location):
-            return True
-        elif target_col == col + 1 and target_row == row - 2 and (location):
-            return True
-        elif target_col == col + 2 and target_row == row + 1 and (location):
-            return True
-        elif target_col == col + 2 and target_row == row - 1 and (location):
+        if ((target_col == col - 1 and target_row == row + 2 and (location)) or 
+            (target_col == col - 1 and target_row == row - 2 and (location)) or 
+            (target_col == col - 2 and target_row == row + 1 and (location)) or 
+            (target_col == col - 2 and target_row == row - 1 and (location)) or 
+            (target_col == col + 1 and target_row == row + 2 and (location)) or 
+            (target_col == col + 1 and target_row == row - 2 and (location)) or 
+            (target_col == col + 2 and target_row == row + 1 and (location)) or 
+            (target_col == col + 2 and target_row == row - 1 and (location))):
             return True
         else:
             return False

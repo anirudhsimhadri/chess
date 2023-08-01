@@ -45,3 +45,10 @@ class Rook():
 
         # if we're here, then all conditions have been satisfied
         return True
+    
+        """if new_x == x and (new_y in range(8)) and (board.chessboard[new_x][new_y] == None or board.chessboard[new_x][new_y].color != board.chessboard[x][y].color):
+            return True
+        elif new_y == y and (new_x in range(8)) and (board.chessboard[new_x][new_y] == None or board.chessboard[new_x][new_y].color != board.chessboard[x][y].color):
+            return True
+        else:
+            return False"""
