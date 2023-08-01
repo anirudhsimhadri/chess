@@ -17,7 +17,7 @@ class Rook():
 
         self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
     
-    def move(self, row, col, target_row, target_col):
+    def move(self, row, col, target_row, target_col, board):
         self.row = target_row
         self.col = target_col
         self.hasMoved = True
