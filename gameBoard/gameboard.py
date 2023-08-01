@@ -39,52 +39,40 @@ def main():
 
     chessboard_matrix = ChessBoardMatrix()
 
-    white_pawn = p('white')
-    black_pawn = p('black')
 
     # Place white pawns ('P') on row 6
     for col in range(chessboard_matrix.cols):
-        chessboard_matrix.place_piece(6, col, white_pawn)
+        chessboard_matrix.place_piece(6, col, p("white"))
 
     # Place black pawns ('p') on row 1
     for col in range(chessboard_matrix.cols):
-        chessboard_matrix.place_piece(1, col, black_pawn)
+        chessboard_matrix.place_piece(1, col, p("black"))
     
     #place Rooks
-    black_rook = r('black')
-    white_rook = r('white')
-    chessboard_matrix.place_piece(0, 0, black_rook)
-    chessboard_matrix.place_piece(7, 7, white_rook)
-    chessboard_matrix.place_piece(0, 7, black_rook)
-    chessboard_matrix.place_piece(7, 0, white_rook)
+    chessboard_matrix.place_piece(0, 0, r("black"))
+    chessboard_matrix.place_piece(7, 7, r("white"))
+    chessboard_matrix.place_piece(0, 7, r("black"))
+    chessboard_matrix.place_piece(7, 0, r("white"))
 
     #place Bishops
-    black_bishop = b('black')
-    white_bishop = b('white')
-    chessboard_matrix.place_piece(0, 1, black_bishop)
-    chessboard_matrix.place_piece(7, 6, white_bishop)
-    chessboard_matrix.place_piece(0, 6, black_bishop)
-    chessboard_matrix.place_piece(7, 1, white_bishop)
+    chessboard_matrix.place_piece(0, 1, b("black"))
+    chessboard_matrix.place_piece(7, 6, b("white"))
+    chessboard_matrix.place_piece(0, 6, b("black"))
+    chessboard_matrix.place_piece(7, 1, b("white"))
     
     #place Knights
-    black_knight = k('black')
-    white_knight = k('white')
-    chessboard_matrix.place_piece(0, 2, black_knight)
-    chessboard_matrix.place_piece(7, 5, white_knight)
-    chessboard_matrix.place_piece(0, 5, black_knight)
-    chessboard_matrix.place_piece(7, 2, white_knight)
+    chessboard_matrix.place_piece(0, 2, k('black'))
+    chessboard_matrix.place_piece(7, 5, k('white'))
+    chessboard_matrix.place_piece(0, 5, k('black'))
+    chessboard_matrix.place_piece(7, 2, k('white'))
     
     #place Queens
-    black_queen = q('black')
-    white_queen = q('white')
-    chessboard_matrix.place_piece(0, 3, black_queen)
-    chessboard_matrix.place_piece(7, 3, white_queen)
+    chessboard_matrix.place_piece(0, 3, q('black'))
+    chessboard_matrix.place_piece(7, 3, q('white'))
 
     #place Kings
-    black_king = King('black')
-    white_king = King('white')
-    chessboard_matrix.place_piece(0, 4, black_king)
-    chessboard_matrix.place_piece(7, 4, white_king)
+    chessboard_matrix.place_piece(0, 4, King('black'))
+    chessboard_matrix.place_piece(7, 4, King('white'))
 
     selected_square: tuple[int, int] | None = None
     selected_piece: ChessPiece | None = None
@@ -112,7 +100,6 @@ def main():
                             assert selected_piece is not None
 
                             target = chessboard_matrix.chessboard[clicked_row][clicked_col]
-                            print(target)
 
                             if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, cast(Cbm, chessboard_matrix)):
                                 chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
