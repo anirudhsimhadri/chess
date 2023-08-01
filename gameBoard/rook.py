@@ -20,13 +20,12 @@ class Rook():
     def move(self, row, col, target_row, target_col):
         self.row = target_row
         self.col = target_col
-        self.hasMoved = True #set to True so the pawn cant move two squares forward
-    def is_valid_move(self, x, y, new_x, new_y, board):
+        self.hasMoved = True
         """
         Checks if the move is valid (it's a straight line and no piece is blocking the path).
         This doesn't check if the king would be in check after this move - that logic belongs elsewhere.
         """
-        if new_x != x and new_y != y:  # The rook moves in a straight line
+        if new_x != self.x and new_y != self.y:  # The rook moves in a straight line
             return False
 
         # check if there's any piece blocking the way
