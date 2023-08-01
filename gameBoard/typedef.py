@@ -39,6 +39,7 @@ class ChessPiece:
     def all_valid_moves(
         self,
         start_row: int,
-        start_col: int
+        start_col: int,
+        matrix: ChessBoardMatrix
     ) -> list[tuple[int, int]]:
         return []
