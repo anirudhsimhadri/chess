@@ -70,9 +70,11 @@ class ChessBoardMatrix:
         start_row: int,
         start_col: int,
         end_row: int,
-        end_col: int
+        end_col: int,
     ):
         """Does the heavy lifting for actually moving pieces"""
+        self.chessboard[end_row][end_col] = self.chessboard[start_row][start_col]
+        self.chessboard[start_row][start_col] = None
     
     def undo_move(
         self,
@@ -83,6 +85,8 @@ class ChessBoardMatrix:
         captured_piece: ChessPiece | None
     ):
         """inverse to `move()`"""
+        self.chessboard[start_row][start_col] = self.chessboard[end_row][end_col]
+        self.chessboard[end_row][end_col] = captured_piece
 
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
