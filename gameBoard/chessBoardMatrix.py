@@ -64,8 +64,24 @@ class ChessBoardMatrix:
                         return True
         
         return False
-
-
+    
+    def move(
+        self,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int
+    ):
+        """Does the heavy lifting for actually moving pieces"""
+    
+    def undo_move(
+        self,
+        start_row: int,
+        start_col: int,
+        end_row: int,
+        end_col: int
+    ):
+        """inverse to `move()`"""
 
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
