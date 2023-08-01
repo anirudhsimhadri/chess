@@ -29,14 +29,14 @@ class Pawn():
                 return True
             elif target_row == row - 1 and target_col == col and not matrix.chessboard[target_row][target_col]:
                 return True
-            elif target_row == row - 1 and abs(target_col - col) == 1 and matrix.chessboard[target_row][target_col] and cbm.chessboard[target_row][target_col].color != self.color:
+            elif target_row == row - 1 and abs(target_col - col) == 1 and matrix.chessboard[target_row][target_col] and matrix.chessboard[target_row][target_col].color != self.color:
                 return True
         elif self.color == "black":
             if target_row == row + 2 and target_col == col and not self.hasMoved:
                 return True
             elif target_row == row + 1 and target_col == col and not matrix.chessboard[target_row][target_col]:
                 return True
-            elif target_row == row + 1 and abs(target_col - col) == 1 and matrix.chessboard[target_row][target_col] and cbm.chessboard[target_row][target_col].color!= self.color:
+            elif target_row == row + 1 and abs(target_col - col) == 1 and matrix.chessboard[target_row][target_col] and matrix.chessboard[target_row][target_col].color != self.color:
                 return True
         return False
     def en_pessant(self, x, y):
