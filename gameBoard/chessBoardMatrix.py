@@ -1,7 +1,8 @@
 import pygame
 import sys
 from BoardConstants import BoardConstants
-from typedef import ChessPiece, unwrap
+from typedef import ChessPiece, unwrap, ChessBoardMatrix as Cbm
+from typing import cast
 Surface = pygame.Surface
 
 
@@ -45,6 +46,26 @@ class ChessBoardMatrix:
 
     def place_piece(self, row, col, piece):
         self.chessboard[row][col] = piece
+    
+    def is_king_in_check(self, color: str) -> bool:
+        king_pos = (99, 99) # obvious dummy value
+        for row in range(self.rows):
+            for col in range(self.cols):
+                piece = self.chessboard[row][col]
+                if piece is not None and piece.pieceType == "king" and piece.color == color:
+                    king_pos = (row, col)
+        
+        for row in range(self.rows):
+            for col in range(self.cols):
+                piece = self.chessboard[row][col]
+                # Hacky way to get around incomplete move validation
+                if piece is not None and callable(getattr(piece, "is_valid_move", None)):
+                    if piece.is_valid_move(row, col, *king_pos, cast(Cbm, self)):
+                        return True
+        
+        return False
+
+
 
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
