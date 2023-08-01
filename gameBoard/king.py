@@ -41,3 +41,35 @@ class King():
         if cap != None and cap.color == self.color: return False
         
         return True
+
+    def all_valid_moves(
+        self,
+        start_row: int,
+        start_col: int,
+        matrix: ChessBoardMatrix
+    ) -> list[tuple[int, int]]:
+        moves = [
+            (start_row + 1, start_col),
+            (start_row - 1, start_col),
+            (start_row, start_col + 1),
+            (start_row, start_col - 1),
+            (start_row + 1, start_col + 1),
+            (start_row + 1, start_col - 1),
+            (start_row - 1, start_col + 1),
+            (start_row - 1, start_col - 1)
+        ]
+
+        moves = [
+            m for m in moves if (
+                m[0] >= 0 and m[0] < 8 and m[1] >= 0 and m[1] < 8
+            )
+        ]
+
+        return [
+            m for m in moves if self.is_valid_move(
+                start_row,
+                start_col,
+                *m,
+                matrix
+            )
+        ]

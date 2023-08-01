@@ -50,3 +50,40 @@ class Bishop():
         if cap != None and cap.color == self.color: return False
 
         return True
+    
+    def all_valid_moves(
+        self,
+        start_row: int,
+        start_col: int,
+        matrix: ChessBoardMatrix
+    ) -> list[tuple[int, int]]:
+        dirs: list[tuple[int, int]] = [
+            (1, 1),
+            (1, -1),
+            (-1, 1),
+            (-1, -1)
+        ]
+
+        moves: list[tuple[int, int]] = []
+
+        for dir in dirs:
+            pos = (start_row, start_col)
+            while True:
+                pos = (
+                    pos[0] + dir[0],
+                    pos[1] + dir[1]
+                )
+                if (pos[0] < 0 or pos[0] >= 8
+                or pos[1] < 0 or pos[1] >= 8):
+                    break
+
+                target = matrix.chessboard[pos[0]][pos[1]]
+                if target == None:
+                    moves.append(pos)
+                elif target.color != self.color:
+                    moves.append(pos)
+                    break
+                else:
+                    break
+        
+        return moves
