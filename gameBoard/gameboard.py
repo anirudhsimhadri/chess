@@ -100,7 +100,6 @@ def main():
                             assert selected_piece is not None
 
                             target = chessboard_matrix.chessboard[clicked_row][clicked_col]
-                            print(target)
 
                             if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, cast(Cbm, chessboard_matrix)):
                                 chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
