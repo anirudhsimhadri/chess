@@ -115,12 +115,10 @@ def main():
                             print(target)
 
                             if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, cast(Cbm, chessboard_matrix)):
-                                chessboard_matrix.chessboard[selected_square[0]][selected_square[1]] = None
-                                chessboard_matrix.chessboard[clicked_row][clicked_col] = selected_piece
+                                chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
                             
                             if chessboard_matrix.is_king_in_check(selected_piece.color):
-                                chessboard_matrix.chessboard[clicked_row][clicked_col] = target
-                                chessboard_matrix.chessboard[selected_square[0]][selected_square[1]] = selected_piece
+                                chessboard_matrix.undo_move(*selected_square, clicked_row, clicked_col, target)
 
                             #clear the selected square
                             selected_square = None
