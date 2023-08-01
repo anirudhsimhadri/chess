@@ -1,11 +1,12 @@
 import pygame
 import sys
 from BoardConstants import BoardConstants
+from typedef import ChessPiece, unwrap
 Surface = pygame.Surface
 
 
 class ChessBoardMatrix:
-    #lchessboard: list[list[ChessPiece | None]]
+    chessboard: list[list[ChessPiece | None]]
 
     def __init__(self):
         #define the rows and columns of the matrix
@@ -57,20 +58,18 @@ class ChessBoardMatrix:
                         continue
                     else:
                         if piece.pieceType == 'pawn':
-                            screen.blit(self.pawn_images.get(piece.color), (x, y))
+                            screen.blit(unwrap(self.pawn_images.get(piece.color)), (x, y))
                         elif piece.pieceType == 'rook':
-                            screen.blit(self.rook_images.get(piece.color), (x, y))
+                            screen.blit(unwrap(self.rook_images.get(piece.color)), (x, y))
                         elif piece.pieceType == 'bishop':
-                            screen.blit(self.bishop_images.get(piece.color), (x, y))
+                            screen.blit(unwrap(self.bishop_images.get(piece.color)), (x, y))
                         elif piece.pieceType == 'queen':
-                            screen.blit(self.queen_images.get(piece.color), (x, y))
+                            screen.blit(unwrap(self.queen_images.get(piece.color)), (x, y))
                         elif piece.pieceType == 'king':
-                            screen.blit(self.king_images.get(piece.color), (x, y))
+                            screen.blit(unwrap(self.king_images.get(piece.color)), (x, y))
                         elif piece.pieceType == 'knight':
-                            screen.blit(self.knight_images.get(piece.color), (x, y))
+                            screen.blit(unwrap(self.knight_images.get(piece.color)), (x, y))
                     
-
-    
     #create screen
     def draw_chessboard(self, screen: Surface):
         for row in range(8):

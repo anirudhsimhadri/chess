@@ -3,7 +3,13 @@ This module contains interfaces for commonly used types.
 These interfaces can be used in place of the actual types in type hints,
 Preventing circular imports
 """
-from typing import Literal
+from typing import Literal, TypeVar
+
+T = TypeVar("T")
+def unwrap(opt: T | None) -> T:
+    """Convert a `T|None` into a `T`, asserting that it isn't `None`"""
+    assert opt is not None
+    return opt
 
 class ChessBoardMatrix:
     """
@@ -17,6 +23,7 @@ class ChessBoardMatrix:
 class ChessPiece:
     """Common interface for all pieces (DONT INHERIT)"""
     color: Literal["white", "black"]
+    pieceType: str
     MaterialValue: int
 
     def is_valid_move(
