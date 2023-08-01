@@ -17,16 +17,15 @@ class Rook():
 
         self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
     
-    def move(self, row, col, target_row, target_col):
+    def move(self, row, col, target_row, target_col, board):
         self.row = target_row
         self.col = target_col
-        self.hasMoved = True #set to True so the pawn cant move two squares forward
-    def is_valid_move(self, x, y, new_x, new_y, board):
+        self.hasMoved = True
         """
         Checks if the move is valid (it's a straight line and no piece is blocking the path).
         This doesn't check if the king would be in check after this move - that logic belongs elsewhere.
         """
-        if new_x != x and new_y != y:  # The rook moves in a straight line
+        if new_x != self.x and new_y != self.y:  # The rook moves in a straight line
             return False
 
         # check if there's any piece blocking the way
@@ -45,3 +44,10 @@ class Rook():
 
         # if we're here, then all conditions have been satisfied
         return True
+    
+        """if new_x == x and (new_y in range(8)) and (board.chessboard[new_x][new_y] == None or board.chessboard[new_x][new_y].color != board.chessboard[x][y].color):
+            return True
+        elif new_y == y and (new_x in range(8)) and (board.chessboard[new_x][new_y] == None or board.chessboard[new_x][new_y].color != board.chessboard[x][y].color):
+            return True
+        else:
+            return False"""
