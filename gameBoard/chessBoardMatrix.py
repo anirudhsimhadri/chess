@@ -5,7 +5,6 @@ from typedef import ChessPiece, unwrap, ChessBoardMatrix as Cbm
 from typing import cast
 Surface = pygame.Surface
 
-
 class ChessBoardMatrix:
     chessboard: list[list[ChessPiece | None]]
 
@@ -63,6 +62,14 @@ class ChessBoardMatrix:
                     if piece.is_valid_move(row, col, *king_pos, cast(Cbm, self)):
                         return True
         
+        return False
+    
+    def is_checkmate(self, color: str) -> bool:
+        """
+        Check if the specified color is in checkmate.
+        This function will likely be very expensive,
+        so some preliminary checks should run beforehand
+        """
         return False
     
     def move(
