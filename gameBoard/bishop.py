@@ -68,12 +68,15 @@ class Bishop():
 
         for dir in dirs:
             pos = (start_row, start_col)
-            while (pos[0] >= 0 and pos[0] < 8
-            and pos[1] >= 0 and pos[1] < 8):
+            while True:
                 pos = (
                     pos[0] + dir[0],
                     pos[1] + dir[1]
                 )
+                if (pos[0] < 0 or pos[0] >= 8
+                or pos[1] < 0 or pos[1] >= 8):
+                    break
+
                 target = matrix.chessboard[pos[0]][pos[1]]
                 if target == None:
                     moves.append(pos)
