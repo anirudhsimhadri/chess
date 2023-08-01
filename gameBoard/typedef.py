@@ -17,6 +17,7 @@ class ChessBoardMatrix:
 class ChessPiece:
     """Common interface for all pieces (DONT INHERIT)"""
     color: Literal["white", "black"]
+    pieceType: str
     MaterialValue: int
 
     def is_valid_move(
