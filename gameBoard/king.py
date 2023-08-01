@@ -59,6 +59,12 @@ class King():
             (start_row - 1, start_col - 1)
         ]
 
+        moves = [
+            m for m in moves if (
+                m[0] >= 0 and m[0] < 8 and m[1] >= 0 and m[1] < 8
+            )
+        ]
+
         return [
             m for m in moves if self.is_valid_move(
                 start_row,
