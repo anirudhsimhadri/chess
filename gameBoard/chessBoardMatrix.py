@@ -65,12 +65,24 @@ class ChessBoardMatrix:
         return False
     
     def is_checkmate(self, color: str) -> bool:
-        """
-        Check if the specified color is in checkmate.
-        This function will likely be very expensive,
-        so some preliminary checks should run beforehand
-        """
-        return False
+        if not self.is_king_in_check(color): return False
+        
+        for row in range(self.rows):
+            for col in range(self.cols):
+                piece = self.chessboard[row][col]
+                if piece is not None and piece.color == color:
+                    if callable(getattr(piece, "all_valid_moves", None)):
+                        for move in piece.all_valid_moves(row, col, cast(Cbm, self)):
+                            target = self.chessboard[move[0]][move[1]]
+                            self.move(row, col, *move)
+
+                            check = self.is_king_in_check(color)
+
+                            self.undo_move(row, col, *move, target)
+
+                            if not check: return False
+        
+        return True
     
     def move(
         self,
