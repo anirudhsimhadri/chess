@@ -79,7 +79,8 @@ class ChessBoardMatrix:
         start_row: int,
         start_col: int,
         end_row: int,
-        end_col: int
+        end_col: int,
+        captured_piece: ChessPiece | None
     ):
         """inverse to `move()`"""
 
