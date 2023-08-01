@@ -73,6 +73,8 @@ class ChessBoardMatrix:
         end_col: int,
     ):
         """Does the heavy lifting for actually moving pieces"""
+        if self.chessboard[start_row][start_col].pieceType == "pawn":
+            self.chessboard[start_row][start_col].hasMoved = True
         self.chessboard[end_row][end_col] = self.chessboard[start_row][start_col]
         self.chessboard[start_row][start_col] = None
     

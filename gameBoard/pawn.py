@@ -36,6 +36,4 @@ class Pawn():
             elif target_row == row + 1 and abs(target_col - col) == 1 and matrix.chessboard[target_row][target_col] and matrix.chessboard[target_row][target_col].color != self.color:
                 return True
         return False
-    def en_pessant(self, x, y):
-        """"pawn en pessant capability"""
         
