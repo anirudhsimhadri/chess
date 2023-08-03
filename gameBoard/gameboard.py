@@ -34,7 +34,7 @@ def draw_border(screen: Surface):
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
 
 
-def main(conn: Socket, is_white: bool):
+def main(conn: Socket | None, is_white: bool):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
     pygame.display.set_caption("Chess Board")
 
@@ -138,4 +138,4 @@ def main(conn: Socket, is_white: bool):
 
 if __name__ == "__main__":
     pygame.init()
-    main(Socket(), True)
+    main(None, True)
