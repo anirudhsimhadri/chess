@@ -81,6 +81,7 @@ def main(conn: Socket | None, is_white: bool):
 
     opponents_move = not is_white
     first_move = True
+    did_win: bool | None = None
 
     while True:
         if not opponents_move:
@@ -128,7 +129,11 @@ def main(conn: Socket | None, is_white: bool):
                                     if response == b"valid!!!":
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
                                         opponents_move = True
-
+                                    elif response == b"gameover":
+                                        chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                                        did_win = True
+                                    else:
+                                        assert response == b"invalid!"
                                 #clear the selected square
                                 selected_square = None
                                 selected_piece = None
@@ -139,7 +144,11 @@ def main(conn: Socket | None, is_white: bool):
             chessboard_matrix.move(*start, *end)
             message = conn.recv(8)
             print(message)
-            assert message == b"yourmove"
+            
+            if message == b"gameover":
+                did_win = False
+            else:
+                assert message == b"yourmove"
             opponents_move = False
         
         #fill the screen edges
@@ -156,6 +165,9 @@ def main(conn: Socket | None, is_white: bool):
 
         #Draw the border around the chessboard
         draw_border(screen)
+
+        if did_win is not None:
+            rs.draw_result_screen(screen, did_win)
 
         #Update the screen
         pygame.display.flip()
