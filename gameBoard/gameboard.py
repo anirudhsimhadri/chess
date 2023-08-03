@@ -128,6 +128,8 @@ def main(conn: Socket | None, is_white: bool):
                                 else:
                                     start, end = net.recvMove(conn)
                                     chessboard_matrix.move(*start, *end)
+                                    message = conn.recv(8)
+                                    assert message == b"yourmove"
                                     opponents_move = False
 
                             #clear the selected square
