@@ -39,7 +39,7 @@ def main(conn: Socket | None, is_white: bool):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
     pygame.display.set_caption("Chess Board")
 
-    chessboard_matrix = ChessBoardMatrix()
+    chessboard_matrix = ChessBoardMatrix(True)
 
 
     # Place white pawns ('P') on row 6
@@ -79,7 +79,7 @@ def main(conn: Socket | None, is_white: bool):
     selected_square: tuple[int, int] | None = None
     selected_piece: ChessPiece | None = None
 
-    opponents_move = False
+    opponents_move = not is_white
 
     while True:
         for event in pygame.event.get():
@@ -119,16 +119,20 @@ def main(conn: Socket | None, is_white: bool):
                             else:
                                 if not opponents_move:
                                     net.sendMove(conn, selected_square, (clicked_row, clicked_col))
+                                    print("Sent move")
 
                                     response = conn.recv(8)
+                                    print(response)
 
                                     if response == b"valid!!!":
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
                                         opponents_move = True
                                 else:
                                     start, end = net.recvMove(conn)
+                                    print("received move")
                                     chessboard_matrix.move(*start, *end)
                                     message = conn.recv(8)
+                                    print(message)
                                     assert message == b"yourmove"
                                     opponents_move = False
 
