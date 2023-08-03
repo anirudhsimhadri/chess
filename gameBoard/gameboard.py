@@ -10,6 +10,8 @@ from queen import Queen as q
 from king import King
 from typedef import ChessPiece, ChessBoardMatrix as Cbm
 from typing import cast
+from socket import socket as Socket
+import net
 Surface = pygame.Surface
 
 cs = BoardConstants()
@@ -32,7 +34,7 @@ def draw_border(screen: Surface):
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
 
 
-def main():
+def main(conn: Socket, is_white: bool):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
     pygame.display.set_caption("Chess Board")
 
@@ -136,4 +138,4 @@ def main():
 
 if __name__ == "__main__":
     pygame.init()
-    main()
+    main(Socket(), True)
