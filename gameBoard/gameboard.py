@@ -133,7 +133,7 @@ def main(conn: Socket | None, is_white: bool):
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
                                         did_win = True
                                     else:
-                                        assert response == b"invalid!"
+                                        pass # Show pop-ups for various invalid moves
                                 #clear the selected square
                                 selected_square = None
                                 selected_piece = None
