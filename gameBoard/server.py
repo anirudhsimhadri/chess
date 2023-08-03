@@ -58,6 +58,9 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
         piece = matrix.chessboard[move_start[0]][move_start[0]]
         target = matrix.chessboard[move_end[0]][move_end[1]]
 
+        print(piece)
+        print(target)
+        
         if piece is None:
             conn.send(b"invalid!")
             continue
@@ -69,6 +72,7 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
         matrix.move(*move_start, *move_end)
 
         if matrix.is_king_in_check(piece.color):
+            print("king is in check")
             conn.send(b"invalid!")
             matrix.undo_move(*move_start, *move_end, target)
             continue
