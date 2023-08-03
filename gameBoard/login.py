@@ -1,6 +1,7 @@
 import pygame
 import sys
 import connect
+import gameboard
 
 # Initialize Pygame
 pygame.init()
@@ -96,10 +97,13 @@ def login_page():
 
         pygame.display.update()
     
-    connect.connectToServer(ip, int(port), username, password)
+    conn = connect.connectToServer(ip, int(port), username, password)
 
-    pygame.quit()
-    sys.exit()
+    color = conn.recv(8)
+    assert color == b"white!!!" or color == b"black!!!"
+    isWhite = color == b"white!!!"
+
+    gameboard.main()
 
 if __name__ == "__main__":
     login_page()
