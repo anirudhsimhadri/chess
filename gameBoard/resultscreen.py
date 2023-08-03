@@ -1,12 +1,11 @@
 import pygame
+from BoardConstants import BoardConstants as BC
 
 Surface = pygame.Surface
 
-# Placeholder values for now,
-# because importing them from gameboard.py
-# would cause a circular import
-WINDOW_SIZE = 900
-BOARD_SIZE = 650
+BC = BC()
+WINDOW_SIZE = BC.WINDOW_SIZE
+BOARD_SIZE = BC.BOARD_SIZE
 
 def draw_result_screen(screen: Surface, did_win: bool):
     """Draws the win/lose screen after the game has ended"""

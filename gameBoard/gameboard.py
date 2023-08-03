@@ -11,6 +11,7 @@ from king import King
 from typedef import ChessPiece, ChessBoardMatrix as Cbm
 from typing import cast
 from socket import socket as Socket
+import resultscreen as rs
 import net
 Surface = pygame.Surface
 
@@ -112,6 +113,8 @@ def main(conn: Socket | None, is_white: bool):
 
                             if chessboard_matrix.is_checkmate(opp_color):
                                 print(f"checkmate for {opp_color}")
+                                rs.draw_result_screen
+                                pygame.display.flip()
 
                             #clear the selected square
                             selected_square = None
