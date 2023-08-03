@@ -8,14 +8,14 @@ class Queen():
         self.color = color
         self.MaterialValue = 9
 
-        if self.color == "white":
-            self.image = pygame.image.load('white_queen.png').convert_alpha()
-        elif self.color == "black":
-            self.image = pygame.image.load('black_queen.png').convert_alpha()
+        #if self.color == "white":
+        #    self.image = pygame.image.load('white_queen.png').convert_alpha()
+        #elif self.color == "black":
+        #    self.image = pygame.image.load('black_queen.png').convert_alpha()
         
         self.cs = BoardConstants()
 
-        self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
+        #self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
 
     def is_valid_move(self, start_row, start_col, end_row, end_col, matrix:cbm):
         """Queen move function"""
