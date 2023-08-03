@@ -21,6 +21,7 @@ class Knight():
         """checks if the desired move is valid"""
 
         #checks if the target location is valid
+        print(target_col, target_row, "KNIGHT")
         location = (matrix.chessboard[target_row][target_col] == None or matrix.chessboard[target_row][target_col].color != matrix.chessboard[row][col].color)
 
         #checking if the designated location is valid according to knights movement rules

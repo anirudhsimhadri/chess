@@ -22,14 +22,14 @@ class Pawn():
     def is_valid_move(self, row, col, target_row, target_col, matrix: cbm):
         #Check if the pawn can move to the target location
         if self.color == "white":
-            if target_row == row - 2 and target_col == col and not self.hasMoved and (matrix.chessboard[row - 1][col] == None):
+            if target_row == row - 2 and target_col == col and not self.hasMoved and (matrix.chessboard[row - 1][col] == None and matrix.chessboard[row - 2][col] == None):
                 return True
             elif target_row == row - 1 and target_col == col and not matrix.chessboard[target_row][target_col]:
                 return True
             elif target_row == row - 1 and abs(target_col - col) == 1 and matrix.chessboard[target_row][target_col] and matrix.chessboard[target_row][target_col].color != self.color:
                 return True
         elif self.color == "black":
-            if target_row == row + 2 and target_col == col and not self.hasMoved and (matrix.chessboard[row + 1][col] == None):
+            if target_row == row + 2 and target_col == col and not self.hasMoved and (matrix.chessboard[row + 1][col] == None and matrix.chessboard[row + 2][col] == None):
                 return True
             elif target_row == row + 1 and target_col == col and not matrix.chessboard[target_row][target_col]:
                 return True
