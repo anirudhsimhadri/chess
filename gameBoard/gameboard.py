@@ -12,7 +12,6 @@ from typedef import ChessPiece, ChessBoardMatrix as Cbm
 from typing import cast
 Surface = pygame.Surface
 
-pygame.init()
 cs = BoardConstants()
 
 def draw_tracking_boxes(screen: Surface):
@@ -136,4 +135,5 @@ def main():
         pygame.display.flip()
 
 if __name__ == "__main__":
+    pygame.init()
     main()
