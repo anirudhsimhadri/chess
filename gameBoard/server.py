@@ -1,5 +1,6 @@
 from typing import Tuple
 import socket
+import random
 
 Socket = socket.socket
 
@@ -70,5 +71,10 @@ def serve(port: int, password: str):
             continue
     
     print("P2 connected with name {}".format(p2Name))
+
+    p1isWhite = bool(random.getrandbits(1))
+
+    p1Conn.send(b"white!!!" if p1isWhite else b"black!!!")
+    p2Conn.send(b"white!!!" if not p1isWhite else b"black!!!")
 
 if __name__ == "__main__": serve(4567, "password")
