@@ -83,10 +83,13 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
             game_ended = True
 
         oppConn = p2 if p1Turn else p1
-        conn.send(b"valid!!!")
         net.sendMove(oppConn, move_start, move_end)
-        oppConn.send(b"yourmove" if not game_ended else b"gameover")
-        
+        if not game_ended:
+            conn.send(b"valid!!!")
+            oppConn.send(b"yourmove")
+        else:
+            p1.send(b"gameover")
+            p2.send(b"gameover")
         p1Turn = not p1Turn
 
 def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:
