@@ -28,16 +28,18 @@ class Rook():
 
         if target_row == row and (target_col in range(8)) and (board.chessboard[target_row][target_col] == None or board.chessboard[target_row][target_col].color != board.chessboard[row][col].color):
             dir = (
-            1 if row_diff > 0 else -1,
+            0,
             1 if col_diff > 0 else -1
             )
             pos = row, col
+            
 
             for i in range(1, abs(col_diff)):
                 pos = (
                 pos[0] + dir[0],
                 pos[1] + dir[1]
                 )
+                
 
                 if board.chessboard[pos[0]][pos[1]] != None:
                     return False
@@ -45,15 +47,17 @@ class Rook():
         elif target_col == col and (target_row in range(8)) and (board.chessboard[target_row][target_col] == None or board.chessboard[target_row][target_col].color != board.chessboard[row][col].color):
             dir = (
             1 if row_diff > 0 else -1,
-            1 if col_diff > 0 else -1
+            0
             )
             pos = row, col
+
 
             for i in range(1, abs(row_diff)):
                 pos = (
                 pos[0] + dir[0],
                 pos[1] + dir[1]
-            )
+                )
+                
 
                 if board.chessboard[pos[0]][pos[1]] != None:
                     return False
