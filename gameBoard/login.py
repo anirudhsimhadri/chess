@@ -103,6 +103,8 @@ def login_page():
     assert color == b"white!!!" or color == b"black!!!"
     isWhite = color == b"white!!!"
 
+    print("We're white" if isWhite else "We're black")
+
     gameboard.main(conn, isWhite)
 
 if __name__ == "__main__":
