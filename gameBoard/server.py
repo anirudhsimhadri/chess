@@ -55,7 +55,7 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
         conn = p1 if p1Turn else p2
         move_start, move_end = net.recvMove(conn)
         print("P1" if p1Turn else "P2", f"moved from {move_start} to {move_end}")
-        piece = matrix.chessboard[move_start[0]][move_start[0]]
+        piece = matrix.chessboard[move_start[0]][move_start[1]]
         target = matrix.chessboard[move_end[0]][move_end[1]]
 
         print(piece)
