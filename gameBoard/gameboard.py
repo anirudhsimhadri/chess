@@ -80,44 +80,45 @@ def main(conn: Socket | None, is_white: bool):
     selected_piece: ChessPiece | None = None
 
     opponents_move = not is_white
+    first_move = True
 
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    mouse_x, mouse_y = event.pos
-                    clicked_row, clicked_col = (mouse_y - cs.OFFSET_Y) // cs.SQUARE_SIZE, mouse_x // cs.SQUARE_SIZE
-                    if clicked_row >= 8 or clicked_col >= 8 or clicked_row < 0 or clicked_col < 0:
-                        selected_square = None
-                    else:
-                        if selected_square is None:
-                            selected_square = (clicked_row, clicked_col)
-                            print(selected_square)
-                            selected_piece = chessboard_matrix.chessboard[selected_square[0]][selected_square[1]]
-                            if selected_piece == None:
-                                selected_square = None
-                            
+        if not opponents_move:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mouse_x, mouse_y = event.pos
+                        clicked_row, clicked_col = (mouse_y - cs.OFFSET_Y) // cs.SQUARE_SIZE, mouse_x // cs.SQUARE_SIZE
+                        if clicked_row >= 8 or clicked_col >= 8 or clicked_row < 0 or clicked_col < 0:
+                            selected_square = None
                         else:
-                            assert selected_piece is not None
-
-                            target = chessboard_matrix.chessboard[clicked_row][clicked_col]
-
-                            if conn is None: # Server can handle all this
-                                if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, cast(Cbm, chessboard_matrix)):
-                                    chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                            if selected_square is None:
+                                selected_square = (clicked_row, clicked_col)
+                                print(selected_square)
+                                selected_piece = chessboard_matrix.chessboard[selected_square[0]][selected_square[1]]
+                                if selected_piece == None:
+                                    selected_square = None
                                 
-                                    if chessboard_matrix.is_king_in_check(selected_piece.color):
-                                        chessboard_matrix.undo_move(*selected_square, clicked_row, clicked_col, target)
-                                
-                                    opp_color = "white" if selected_piece.color == "black" else "black"
-
-                                    if chessboard_matrix.is_checkmate(opp_color):
-                                        print(f"checkmate for {opp_color}")
                             else:
-                                if not opponents_move:
+                                assert selected_piece is not None
+
+                                target = chessboard_matrix.chessboard[clicked_row][clicked_col]
+
+                                if conn is None: # Server can handle all this
+                                    if selected_piece.is_valid_move(*selected_square, clicked_row, clicked_col, cast(Cbm, chessboard_matrix)):
+                                        chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                                    
+                                        if chessboard_matrix.is_king_in_check(selected_piece.color):
+                                            chessboard_matrix.undo_move(*selected_square, clicked_row, clicked_col, target)
+                                    
+                                        opp_color = "white" if selected_piece.color == "black" else "black"
+
+                                        if chessboard_matrix.is_checkmate(opp_color):
+                                            print(f"checkmate for {opp_color}")
+                                else:
                                     net.sendMove(conn, selected_square, (clicked_row, clicked_col))
                                     print("Sent move")
 
@@ -127,19 +128,19 @@ def main(conn: Socket | None, is_white: bool):
                                     if response == b"valid!!!":
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
                                         opponents_move = True
-                                else:
-                                    start, end = net.recvMove(conn)
-                                    print("received move")
-                                    chessboard_matrix.move(*start, *end)
-                                    message = conn.recv(8)
-                                    print(message)
-                                    assert message == b"yourmove"
-                                    opponents_move = False
 
-                            #clear the selected square
-                            selected_square = None
-                            selected_piece = None
+                                #clear the selected square
+                                selected_square = None
+                                selected_piece = None
                             
+        elif conn is not None and not first_move:
+            start, end = net.recvMove(conn)
+            print("received move")
+            chessboard_matrix.move(*start, *end)
+            message = conn.recv(8)
+            print(message)
+            assert message == b"yourmove"
+            opponents_move = False
         
         #fill the screen edges
         screen.fill(cs.BLACK)
@@ -158,6 +159,8 @@ def main(conn: Socket | None, is_white: bool):
 
         #Update the screen
         pygame.display.flip()
+
+        first_move = False
 
 if __name__ == "__main__":
     pygame.init()
