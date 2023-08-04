@@ -34,6 +34,12 @@ def draw_border(screen: Surface):
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X- 4, cs.OFFSET_Y - 150, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
 
+def draw_validation_popup(screen: Surface, msg: str):
+    """Draws the message when you make an invalid move"""
+
+    font = pygame.font.SysFont("Arial", 18)
+    text = font.render(msg, True, (0xff, 0xff, 0xff))
+    screen.blit(text, (cs.BOARD_SIZE + 18, cs.BOARD_SIZE // 3))
 
 def main(conn: Socket | None, is_white: bool):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
@@ -82,6 +88,7 @@ def main(conn: Socket | None, is_white: bool):
     opponents_move = not is_white
     first_move = True
     did_win: bool | None = None
+    validation_message: str | None = None
 
     while True:
         if not opponents_move:
@@ -128,12 +135,19 @@ def main(conn: Socket | None, is_white: bool):
 
                                     if response == b"valid!!!":
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                                        validation_message = None
                                         opponents_move = True
                                     elif response == b"gameover":
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                                        validation_message = None
                                         did_win = True
-                                    else:
-                                        pass # Show pop-ups for various invalid moves
+                                    else: # Move was invalid, let's see why
+                                        if response == b"invalid!" and selected_square != (clicked_row, clicked_col):
+                                            validation_message = f"{selected_piece.pieceType.title()} cannot move in that way"
+                                        elif response == b"check!!!":
+                                            validation_message = "King is in check"
+                                        elif response == b"pinned!!":
+                                            validation_message = f"{selected_piece.pieceType.title()} is pinned"
                                 #clear the selected square
                                 selected_square = None
                                 selected_piece = None
@@ -165,6 +179,9 @@ def main(conn: Socket | None, is_white: bool):
 
         #Draw the border around the chessboard
         draw_border(screen)
+
+        if validation_message is not None:
+            draw_validation_popup(screen, validation_message)
 
         if did_win is not None:
             rs.draw_result_screen(screen, did_win)
