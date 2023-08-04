@@ -64,6 +64,10 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
         if piece is None:
             conn.send(b"no piece")
             continue
+        
+        was_check = False
+        if matrix.is_king_in_check(piece.color):
+            was_check = True
 
         if not piece.is_valid_move(*move_start, *move_end, cast(Cbm, matrix)):
             conn.send(b"invalid!")
@@ -73,7 +77,10 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
 
         if matrix.is_king_in_check(piece.color):
             print("king is in check")
-            conn.send(b"check!!!")
+            if was_check:
+                conn.send(b"check!!!")
+            else:
+                conn.send(b"pinned!!")
             matrix.undo_move(*move_start, *move_end, target)
             continue
 
