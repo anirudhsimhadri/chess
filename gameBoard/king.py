@@ -18,12 +18,6 @@ class King():
 
         #self.image = pygame.transform.scale(self.image, (self.cs.SQUARE_SIZE, self.cs.SQUARE_SIZE))
     
-    def move(self, x, y):
-        """Kings move funtion"""
-    
-    def castle(self, x, y):
-        """Kings castle funtion"""
-        
     def is_valid_move(
         self,
         start_row: int,
