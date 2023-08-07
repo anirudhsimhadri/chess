@@ -55,32 +55,45 @@ def main(conn: Socket | None, is_white: bool):
     # Place black pawns ('p') on row 1
     for col in range(chessboard_matrix.cols):
         chessboard_matrix.place_piece(1, col, p("black"))
-    
-    #place Rooks
-    chessboard_matrix.place_piece(0, 0, r("black"))
-    chessboard_matrix.place_piece(7, 7, r("white"))
-    chessboard_matrix.place_piece(0, 7, r("black"))
-    chessboard_matrix.place_piece(7, 0, r("white"))
 
-    #place Bishops
-    chessboard_matrix.place_piece(0, 1, b("black"))
-    chessboard_matrix.place_piece(7, 6, b("white"))
-    chessboard_matrix.place_piece(0, 6, b("black"))
-    chessboard_matrix.place_piece(7, 1, b("white"))
-    
-    #place Knights
-    chessboard_matrix.place_piece(0, 2, k('black'))
-    chessboard_matrix.place_piece(7, 5, k('white'))
-    chessboard_matrix.place_piece(0, 5, k('black'))
-    chessboard_matrix.place_piece(7, 2, k('white'))
-    
-    #place Queens
-    chessboard_matrix.place_piece(0, 3, q('black'))
-    chessboard_matrix.place_piece(7, 3, q('white'))
+    # Piece types and their corresponding columns
+    pieces = [
+        ('r', [0, 7]), ('b', [1, 6]), ('k', [2, 5]),
+        ('q', [3]), ('King', [4])
+    ]
 
-    #place Kings
-    chessboard_matrix.place_piece(0, 4, King('black'))
-    chessboard_matrix.place_piece(7, 4, King('white'))
+    # Iterate through piece types and columns
+    for piece, cols in pieces:
+        for col in cols:
+            func = eval(piece) if piece != 'King' else King
+            chessboard_matrix.place_piece(0, col, func('black'))
+            chessboard_matrix.place_piece(7, col, func('white'))
+
+    # #place Rooks
+    # chessboard_matrix.place_piece(0, 0, r("black"))
+    # chessboard_matrix.place_piece(7, 7, r("white"))
+    # chessboard_matrix.place_piece(0, 7, r("black"))
+    # chessboard_matrix.place_piece(7, 0, r("white"))
+
+    # #place Bishops
+    # chessboard_matrix.place_piece(0, 1, b("black"))
+    # chessboard_matrix.place_piece(7, 6, b("white"))
+    # chessboard_matrix.place_piece(0, 6, b("black"))
+    # chessboard_matrix.place_piece(7, 1, b("white"))
+    
+    # #place Knights
+    # chessboard_matrix.place_piece(0, 2, k('black'))
+    # chessboard_matrix.place_piece(7, 5, k('white'))
+    # chessboard_matrix.place_piece(0, 5, k('black'))
+    # chessboard_matrix.place_piece(7, 2, k('white'))
+    
+    # #place Queens
+    # chessboard_matrix.place_piece(0, 3, q('black'))
+    # chessboard_matrix.place_piece(7, 3, q('white'))
+
+    # #place Kings
+    # chessboard_matrix.place_piece(0, 4, King('black'))
+    # chessboard_matrix.place_piece(7, 4, King('white'))
 
     selected_square: tuple[int, int] | None = None
     selected_piece: ChessPiece | None = None
