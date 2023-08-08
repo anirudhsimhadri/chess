@@ -170,6 +170,8 @@ def main(conn: Socket | None, is_white: bool):
                                             validation_message = "King is in check"
                                         elif response == b"pinned!!":
                                             validation_message = f"{selected_piece.pieceType.title()} is pinned"
+                                        elif response == b"oppcolor":
+                                            validation_message = "Can't move opponent's piece"
                                 #clear the selected square
                                 selected_square = None
                                 selected_piece = None
