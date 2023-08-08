@@ -127,8 +127,8 @@ class ChessBoardMatrix:
                 assert rook is not None
                 assert not rook.hasMoved
 
-                self.chessboard[start_row][end_col] = piece
-                self.chessboard[start_row][start_col] = None
+                self.chessboard[start_row][2] = piece
+                self.chessboard[start_row][4] = None
                 self.chessboard[start_row][3] = rook
                 self.chessboard[start_row][0] = None
             else:
@@ -137,16 +137,16 @@ class ChessBoardMatrix:
                 assert rook is not None
                 assert not rook.hasMoved
 
-                self.chessboard[start_row][end_col] = piece
-                self.chessboard[start_row][start_col] = None
+                self.chessboard[start_row][6] = piece
+                self.chessboard[start_row][4] = None
                 self.chessboard[start_row][5] = rook
                 self.chessboard[start_row][7] = None
 
             print(self.chessboard[start_row][end_col].__dict__)
-        
-        if piece.pieceType == "king" or piece.pieceType == "rook":
             piece.hasMoved = True
 
+            return
+        
         self.chessboard[end_row][end_col] = self.chessboard[start_row][start_col]
         self.chessboard[start_row][start_col] = None
     
