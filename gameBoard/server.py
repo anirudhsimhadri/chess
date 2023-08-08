@@ -61,15 +61,19 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
         conn = p1 if p1Turn else p2
         move_start, move_end = net.recvMove(conn)
         print("P1" if p1Turn else "P2", f"moved from {move_start} to {move_end}")
-        piece = matrix.chessboard[move_start[0]][move_start[0]]
+        piece = matrix.chessboard[move_start[0]][move_start[1]]
         target = matrix.chessboard[move_end[0]][move_end[1]]
 
         print(piece)
         print(target)
         
         if piece is None:
-            conn.send(b"invalid!")
+            conn.send(b"no piece")
             continue
+        
+        was_check = False
+        if matrix.is_king_in_check(piece.color):
+            was_check = True
 
         if not piece.is_valid_move(*move_start, *move_end, cast(Cbm, matrix)):
             conn.send(b"invalid!")
@@ -79,7 +83,10 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
 
         if matrix.is_king_in_check(piece.color):
             print("king is in check")
-            conn.send(b"invalid!")
+            if was_check:
+                conn.send(b"check!!!")
+            else:
+                conn.send(b"pinned!!")
             matrix.undo_move(*move_start, *move_end, target)
             continue
 
@@ -89,10 +96,13 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
             game_ended = True
 
         oppConn = p2 if p1Turn else p1
-        conn.send(b"valid!!!")
         net.sendMove(oppConn, move_start, move_end)
-        oppConn.send(b"yourmove" if not game_ended else b"gameover")
-        
+        if not game_ended:
+            conn.send(b"valid!!!")
+            oppConn.send(b"yourmove")
+        else:
+            p1.send(b"gameover")
+            p2.send(b"gameover")
         p1Turn = not p1Turn
 
 def acceptPlayer(sock: Socket, password: str) -> Tuple[Socket, str]:

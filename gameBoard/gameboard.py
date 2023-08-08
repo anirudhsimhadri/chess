@@ -34,6 +34,12 @@ def draw_border(screen: Surface):
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X- 4, cs.OFFSET_Y - 150, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
     #pygame.draw.rect(screen, cs.BLACK, (cs.OFFSET_X - 4, cs.OFFSET_Y + cs.BOARD_SIZE, cs.BOX_WIDTH + 8, cs.BOX_HEIGHT + 8), 5)
 
+def draw_validation_popup(screen: Surface, msg: str):
+    """Draws the message when you make an invalid move"""
+
+    font = pygame.font.SysFont("Arial", 18)
+    text = font.render(msg, True, (0xff, 0xff, 0xff))
+    screen.blit(text, (cs.BOARD_SIZE + 18, cs.BOARD_SIZE // 3))
 
 def main(conn: Socket | None, is_white: bool):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
@@ -53,32 +59,45 @@ def main(conn: Socket | None, is_white: bool):
     # Place black pawns ('p') on row 1
     for col in range(chessboard_matrix.cols):
         chessboard_matrix.place_piece(1, col, p("black"))
-    
-    #place Rooks
-    chessboard_matrix.place_piece(0, 0, r("black"))
-    chessboard_matrix.place_piece(7, 7, r("white"))
-    chessboard_matrix.place_piece(0, 7, r("black"))
-    chessboard_matrix.place_piece(7, 0, r("white"))
 
-    #place Bishops
-    chessboard_matrix.place_piece(0, 1, b("black"))
-    chessboard_matrix.place_piece(7, 6, b("white"))
-    chessboard_matrix.place_piece(0, 6, b("black"))
-    chessboard_matrix.place_piece(7, 1, b("white"))
-    
-    #place Knights
-    chessboard_matrix.place_piece(0, 2, k('black'))
-    chessboard_matrix.place_piece(7, 5, k('white'))
-    chessboard_matrix.place_piece(0, 5, k('black'))
-    chessboard_matrix.place_piece(7, 2, k('white'))
-    
-    #place Queens
-    chessboard_matrix.place_piece(0, 3, q('black'))
-    chessboard_matrix.place_piece(7, 3, q('white'))
+    # Piece types and their corresponding columns
+    pieces = [
+        (r, [0, 7]), (b, [1, 6]), (k, [2, 5]),
+        (q, [3]), (King, [4])
+    ]
 
-    #place Kings
-    chessboard_matrix.place_piece(0, 4, King('black'))
-    chessboard_matrix.place_piece(7, 4, King('white'))
+    # Iterate through piece types and columns
+    for piece, cols in pieces:
+        for col in cols:
+            func = piece if piece != King else King
+            chessboard_matrix.place_piece(0, col, func('black'))
+            chessboard_matrix.place_piece(7, col, func('white'))
+
+    # #place Rooks
+    # chessboard_matrix.place_piece(0, 0, r("black"))
+    # chessboard_matrix.place_piece(7, 7, r("white"))
+    # chessboard_matrix.place_piece(0, 7, r("black"))
+    # chessboard_matrix.place_piece(7, 0, r("white"))
+
+    # #place Bishops
+    # chessboard_matrix.place_piece(0, 1, b("black"))
+    # chessboard_matrix.place_piece(7, 6, b("white"))
+    # chessboard_matrix.place_piece(0, 6, b("black"))
+    # chessboard_matrix.place_piece(7, 1, b("white"))
+    
+    # #place Knights
+    # chessboard_matrix.place_piece(0, 2, k('black'))
+    # chessboard_matrix.place_piece(7, 5, k('white'))
+    # chessboard_matrix.place_piece(0, 5, k('black'))
+    # chessboard_matrix.place_piece(7, 2, k('white'))
+    
+    # #place Queens
+    # chessboard_matrix.place_piece(0, 3, q('black'))
+    # chessboard_matrix.place_piece(7, 3, q('white'))
+
+    # #place Kings
+    # chessboard_matrix.place_piece(0, 4, King('black'))
+    # chessboard_matrix.place_piece(7, 4, King('white'))
 
     selected_square: tuple[int, int] | None = None
     selected_piece: ChessPiece | None = None
@@ -86,6 +105,8 @@ def main(conn: Socket | None, is_white: bool):
 
     opponents_move = not is_white
     first_move = True
+    did_win: bool | None = None
+    validation_message: str | None = None
 
 
     while True:
@@ -136,8 +157,19 @@ def main(conn: Socket | None, is_white: bool):
 
                                     if response == b"valid!!!":
                                         chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                                        validation_message = None
                                         opponents_move = True
-
+                                    elif response == b"gameover":
+                                        chessboard_matrix.move(*selected_square, clicked_row, clicked_col)
+                                        validation_message = None
+                                        did_win = True
+                                    else: # Move was invalid, let's see why
+                                        if response == b"invalid!" and selected_square != (clicked_row, clicked_col):
+                                            validation_message = f"{selected_piece.pieceType.title()} cannot move in that way"
+                                        elif response == b"check!!!":
+                                            validation_message = "King is in check"
+                                        elif response == b"pinned!!":
+                                            validation_message = f"{selected_piece.pieceType.title()} is pinned"
                                 #clear the selected square
                                 selected_square = None
                                 selected_piece = None
@@ -148,7 +180,11 @@ def main(conn: Socket | None, is_white: bool):
             chessboard_matrix.move(*start, *end)
             message = conn.recv(8)
             print(message)
-            assert message == b"yourmove"
+            
+            if message == b"gameover":
+                did_win = False
+            else:
+                assert message == b"yourmove"
             opponents_move = False
         
         #fill the screen edges
@@ -172,6 +208,12 @@ def main(conn: Socket | None, is_white: bool):
             rect_x = cs.OFFSET_X + clicked_col * cs.SQUARE_SIZE
             rect_y = cs.OFFSET_Y + clicked_row *cs.SQUARE_SIZE
             screen.blit(s, (rect_x, rect_y))
+        
+        if validation_message is not None:
+            draw_validation_popup(screen, validation_message)
+
+        if did_win is not None:
+            rs.draw_result_screen(screen, did_win)
 
         #Update the screen
         pygame.display.flip()
