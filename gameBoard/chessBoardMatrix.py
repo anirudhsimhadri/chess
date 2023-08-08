@@ -214,7 +214,7 @@ class ChessBoardMatrix:
         self.chessboard[start_row][start_col] = piece
         self.chessboard[end_row][end_col] = captured_piece
 
-        if getattr(piece, "hasMovedBefore") is not None:
+        if getattr(piece, "hasMovedBefore", None) is not None:
             piece.hasMoved = piece.hasMovedBefore
 
     def draw_pieces(self, screen: Surface):
