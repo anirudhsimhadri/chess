@@ -44,8 +44,11 @@ class King():
                 if rook.hasMoved: return False
 
                 if matrix.chessboard[start_row][1] is not None: return False
+                if matrix.is_threatened(start_row, 1, self.color): return False
                 if matrix.chessboard[start_row][2] is not None: return False
+                if matrix.is_threatened(start_row, 2, self.color): return False
                 if matrix.chessboard[start_row][3] is not None: return False
+                if matrix.is_threatened(start_row, 3, self.color): return False
                 
                 return True
             elif end_col == 6:
@@ -56,7 +59,9 @@ class King():
                 if rook.hasMoved: return False
 
                 if matrix.chessboard[start_row][5] is not None: return False
+                if matrix.is_threatened(start_row, 5, self.color): return False
                 if matrix.chessboard[start_row][6] is not None: return False
+                if matrix.is_threatened(start_row, 6, self.color): return False
 
                 return True
 

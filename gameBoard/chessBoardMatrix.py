@@ -76,6 +76,17 @@ class ChessBoardMatrix:
         
         return False
     
+    def is_threatened(self, row, col, color) -> bool:
+        for row_ in range(8):
+            for col_ in range(8):
+                piece = self.chessboard[row_][col_]
+                # Hacky way to get around incomplete move validation
+                if piece is not None and piece.color != color and callable(getattr(piece, "is_valid_move", None)):
+                    if piece.is_valid_move(row_, col_, row, col, cast(Cbm, self)):
+                        return True
+        
+        return False
+    
     def is_checkmate(self, color: str) -> bool:
         if not self.is_king_in_check(color): return False
         
@@ -142,7 +153,6 @@ class ChessBoardMatrix:
                 self.chessboard[start_row][5] = rook
                 self.chessboard[start_row][7] = None
 
-            print(self.chessboard[start_row][end_col].__dict__)
             piece.hasMoved = True
 
             return
