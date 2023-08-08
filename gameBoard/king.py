@@ -15,7 +15,6 @@ class King():
         self.MaterialValue = 99
         self.hasMoved = False
         # Backup value for `self.hasMoved`, used to preserve state after `undoMove()`
-        self.hasMovedBefore = False
 
         #if self.color == "white":
         #    self.image = pygame.image.load('white_king.png').convert_alpha()
