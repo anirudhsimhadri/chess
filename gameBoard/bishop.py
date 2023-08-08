@@ -1,3 +1,9 @@
+"""
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: Handles all bishop functionality
+"""
 import pygame
 from chessBoardMatrix import ChessBoardMatrix
 from BoardConstants import BoardConstants

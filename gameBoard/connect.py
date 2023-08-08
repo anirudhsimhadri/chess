@@ -1,3 +1,9 @@
+"""
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: Handles connection to the server
+"""
 from socket import socket as Socket
 
 class BadConnection(BaseException): pass

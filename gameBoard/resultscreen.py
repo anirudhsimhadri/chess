@@ -1,3 +1,9 @@
+"""
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: Handles the end of the game displaying who won and lost
+"""
 import pygame
 from BoardConstants import BoardConstants as BC
 

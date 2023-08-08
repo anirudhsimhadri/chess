@@ -1,5 +1,8 @@
 """
-This module contains interfaces for commonly used types.
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: This module contains interfaces for commonly used types.
 These interfaces can be used in place of the actual types in type hints,
 Preventing circular imports
 """

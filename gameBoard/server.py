@@ -1,8 +1,9 @@
 """
-Two player LAN chess game
-BY: Sam Aven, Ani  , Andrew 
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: Handles all server side communication and passes information between the clients
 """
-
 
 from typing import Tuple
 import socket
