@@ -28,6 +28,33 @@ class King():
         end_col: int,
         matrix: ChessBoardMatrix
     ) -> bool:
+        if not self.hasMoved:
+            # Castling logic (doesn't check if traveled squares are threatened)
+            if end_col == 2:
+                rook = matrix.chessboard[start_row][0]
+
+                if rook is None: return False
+                if rook.pieceType != "rook": return False
+                if rook.hasMoved: return False
+
+                if matrix.chessboard[start_row][1] is not None: return False
+                if matrix.chessboard[start_row][2] is not None: return False
+                if matrix.chessboard[start_row][3] is not None: return False
+                
+                return True
+            else:
+                assert end_col == 6
+                rook = matrix.chessboard[start_row][7]
+
+                if rook is None: return False
+                if rook.pieceType != "rook": return False
+                if rook.hasMoved: return False
+
+                if matrix.chessboard[start_row][5] is not None: return False
+                if matrix.chessboard[start_row][6] is not None: return False
+
+                return True
+
         row_diff = end_row - start_row
         col_diff = end_col - start_col
         
