@@ -49,14 +49,19 @@ class ChessBoardMatrix:
     
     def is_king_in_check(self, color: str) -> bool:
         king_pos = (99, 99) # obvious dummy value
-        for row in range(self.rows):
-            for col in range(self.cols):
+
+        for row in range(8):
+            for col in range(8):
                 piece = self.chessboard[row][col]
+
                 if piece is not None and piece.pieceType == "king" and piece.color == color:
                     king_pos = (row, col)
+                    break
         
-        for row in range(self.rows):
-            for col in range(self.cols):
+        assert king_pos != (99, 99), f"Couldn't find {color} king"
+        
+        for row in range(8):
+            for col in range(8):
                 piece = self.chessboard[row][col]
                 # Hacky way to get around incomplete move validation
                 if piece is not None and callable(getattr(piece, "is_valid_move", None)):
@@ -95,8 +100,47 @@ class ChessBoardMatrix:
         """Does the heavy lifting for actually moving pieces"""
         piece = self.chessboard[start_row][start_col]
         assert piece is not None
-        if piece.pieceType == "pawn" or self.chessboard[start_row][start_col].pieceType == "king":
+
+        print(f"Move {piece.pieceType} from {(start_row, start_col)} to {(end_row, end_col)}")
+        
+        if piece.pieceType == "pawn":
             piece.hasMoved = True
+
+        if (
+            piece.pieceType == "king"
+            and not piece.hasMoved
+            and (
+                end_col == 2
+                or end_col == 6
+            )
+        ):
+            assert start_row == end_row
+
+            if end_col == 2:
+                rook = self.chessboard[start_row][0]
+                assert rook is not None
+                assert not rook.hasMoved
+
+                self.chessboard[start_row][end_col] = piece
+                self.chessboard[start_row][start_col] = None
+                self.chessboard[start_row][3] = rook
+                self.chessboard[start_row][0] = None
+            else:
+                assert end_col == 6
+                rook = self.chessboard[start_row][7]
+                assert rook is not None
+                assert not rook.hasMoved
+
+                self.chessboard[start_row][end_col] = piece
+                self.chessboard[start_row][start_col] = None
+                self.chessboard[start_row][5] = rook
+                self.chessboard[start_row][7] = None
+
+            print(self.chessboard[start_row][end_col].__dict__)
+        
+        if piece.pieceType == "king" or piece.pieceType == "rook":
+            piece.hasMoved = True
+
         self.chessboard[end_row][end_col] = self.chessboard[start_row][start_col]
         self.chessboard[start_row][start_col] = None
     
