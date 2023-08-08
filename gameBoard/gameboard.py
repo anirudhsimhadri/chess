@@ -58,14 +58,14 @@ def main(conn: Socket | None, is_white: bool):
 
     # Piece types and their corresponding columns
     pieces = [
-        ('r', [0, 7]), ('b', [1, 6]), ('k', [2, 5]),
-        ('q', [3]), ('King', [4])
+        (r, [0, 7]), (b, [1, 6]), (k, [2, 5]),
+        (q, [3]), (King, [4])
     ]
 
     # Iterate through piece types and columns
     for piece, cols in pieces:
         for col in cols:
-            func = eval(piece) if piece != 'King' else King
+            func = piece if piece != King else King
             chessboard_matrix.place_piece(0, col, func('black'))
             chessboard_matrix.place_piece(7, col, func('white'))
 
