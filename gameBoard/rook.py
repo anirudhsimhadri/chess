@@ -8,6 +8,10 @@ class Rook():
         self.color = color
         self.MaterialValue = 5
 
+        self.hasMoved = False
+        # Backup value for `self.hasMoved`, used to preserve state after `undoMove()`
+        self.hasMovedBefore = False
+
         #if self.color == "white":
         #    self.image = pygame.image.load('white_rook.png').convert_alpha()
         #elif self.color == "black":
