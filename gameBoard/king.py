@@ -42,8 +42,7 @@ class King():
                 if matrix.chessboard[start_row][3] is not None: return False
                 
                 return True
-            else:
-                assert end_col == 6
+            elif end_col == 6:
                 rook = matrix.chessboard[start_row][7]
 
                 if rook is None: return False
