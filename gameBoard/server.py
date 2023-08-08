@@ -1,3 +1,9 @@
+"""
+Two player LAN chess game
+BY: Sam Aven, Ani  , Andrew 
+"""
+
+
 from typing import Tuple
 import socket
 import random

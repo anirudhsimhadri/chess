@@ -37,6 +37,10 @@ def draw_border(screen: Surface):
 
 def main(conn: Socket | None, is_white: bool):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
+    s = pygame.Surface((cs.SQUARE_SIZE, cs.SQUARE_SIZE), pygame.SRCALPHA)
+    alpha = 100
+    s = s.convert_alpha()
+    s.fill((255, 255, 0, alpha))
     pygame.display.set_caption("Chess Board")
 
     chessboard_matrix = ChessBoardMatrix(True)
@@ -78,9 +82,11 @@ def main(conn: Socket | None, is_white: bool):
 
     selected_square: tuple[int, int] | None = None
     selected_piece: ChessPiece | None = None
+    is_square_selected = False
 
     opponents_move = not is_white
     first_move = True
+
 
     while True:
         if not opponents_move:
@@ -101,6 +107,9 @@ def main(conn: Socket | None, is_white: bool):
                                 selected_piece = chessboard_matrix.chessboard[selected_square[0]][selected_square[1]]
                                 if selected_piece == None:
                                     selected_square = None
+                                else:
+                                    is_square_selected = True
+                                    
                                 
                             else:
                                 assert selected_piece is not None
@@ -156,6 +165,13 @@ def main(conn: Socket | None, is_white: bool):
 
         #Draw the border around the chessboard
         draw_border(screen)
+
+        #Draw yello square to see whats been clicked
+        if is_square_selected:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            rect_x = cs.OFFSET_X + clicked_col * cs.SQUARE_SIZE
+            rect_y = cs.OFFSET_Y + clicked_row *cs.SQUARE_SIZE
+            screen.blit(s, (rect_x, rect_y))
 
         #Update the screen
         pygame.display.flip()
