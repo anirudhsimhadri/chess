@@ -142,6 +142,8 @@ class ChessBoardMatrix:
                 self.chessboard[start_row][4] = None
                 self.chessboard[start_row][3] = rook
                 self.chessboard[start_row][0] = None
+
+                rook.hasMoved = True
             else:
                 assert end_col == 6
                 rook = self.chessboard[start_row][7]
@@ -152,6 +154,8 @@ class ChessBoardMatrix:
                 self.chessboard[start_row][4] = None
                 self.chessboard[start_row][5] = rook
                 self.chessboard[start_row][7] = None
+
+                rook.hasMoved = True
 
             piece.hasMoved = True
 
@@ -169,8 +173,49 @@ class ChessBoardMatrix:
         captured_piece: ChessPiece | None
     ):
         """inverse to `move()`"""
-        self.chessboard[start_row][start_col] = self.chessboard[end_row][end_col]
+        piece = self.chessboard[end_row][end_col]
+        assert piece is not None
+
+        if (
+            piece.pieceType == "king"
+            and abs(start_col - end_col) == 2
+        ):
+            assert not piece.hasMovedBefore
+
+            if end_col == 2:
+                rook = self.chessboard[start_row][3]
+                assert rook is not None
+                assert not rook.hasMovedBefore
+
+                self.chessboard[start_row][0] = rook
+                self.chessboard[start_row][3] = None
+                self.chessboard[start_row][4] = piece
+                self.chessboard[start_row][2] = None
+                
+                piece.hasMoved = False
+                rook.hasmoved = False
+            else:
+                assert end_col == 6
+
+                rook = self.chessboard[start_row][5]
+                assert rook is not None
+                assert not rook.hasMovedBefore
+
+                self.chessboard[start_row][7] = rook
+                self.chessboard[start_row][5] = None
+                self.chessboard[start_row][4] = piece
+                self.chessboard[start_row][6] = None
+
+                piece.hasMoved = False
+                rook.hasmoved = False
+
+            return
+
+        self.chessboard[start_row][start_col] = piece
         self.chessboard[end_row][end_col] = captured_piece
+
+        if getattr(piece, "hasMovedBefore") is not None:
+            piece.hasMoved = piece.hasMovedBefore
 
     def draw_pieces(self, screen: Surface):
         for row in range(self.rows):
