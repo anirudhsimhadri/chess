@@ -70,6 +70,19 @@ def runGame(p1: Socket, p2: Socket, p1IsWhite: bool):
         if piece is None:
             conn.send(b"no piece")
             continue
+
+        playerColor: str
+
+        if p1IsWhite:
+            if p1Turn: playerColor = "white"
+            else: playerColor = "black"
+        else:
+            if p1Turn: playerColor = "black"
+            else: playerColor = "white"
+        
+        if piece.color != playerColor:
+            conn.send(b"oppcolor")
+            continue
         
         was_check = False
         if matrix.is_king_in_check(piece.color):
