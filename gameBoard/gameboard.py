@@ -1,3 +1,10 @@
+"""
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: This file handles a lot of our client side functionality with the drawing of our chessborad, and pieces
+"""
+
 import pygame
 import sys
 from chessBoardMatrix import ChessBoardMatrix

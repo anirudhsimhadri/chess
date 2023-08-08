@@ -1,3 +1,9 @@
+"""
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: Handles the login UI to connect to the server
+"""
 import pygame
 import sys
 import connect

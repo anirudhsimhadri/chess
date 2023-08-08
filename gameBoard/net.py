@@ -1,4 +1,10 @@
 """
+Two Player Lan Chess
+By: Sam Aven, Ani Simhadri, Andrew Voss
+This project was created during an intership with PRI Global
+Purpose of this file: Sends move to and from client
+"""
+"""
 Sending moves between server and client
 
 Moves are sent in a uniform fixed-length format (always 4 bytes):
