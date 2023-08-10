@@ -41,4 +41,31 @@ class Knight():
             return True
         else:
             return False
+    
+    def all_valid_moves(
+        self,
+        start_row: int,
+        start_col: int,
+        matrix: cbm
+    ) -> list[tuple[int, int]]:
+        # theres definitely a better way to generate this
+        moves = [
+            (start_row + 2, start_col - 1),
+            (start_row - 2, start_col - 1),
+            (start_row + 1, start_col - 2),
+            (start_row - 1, start_col - 2),
+            (start_row + 2, start_col + 1),
+            (start_row - 2, start_col + 1),
+            (start_row + 1, start_col + 2),
+            (start_row - 1, start_col + 2)
+        ]
+
+        moves = [
+            (row, col) for (row, col) in moves if (
+                row in range(8) and col in range(8)
+                and self.is_valid_move(start_row, start_col, row, col, matrix)
+            )
+        ]
+
+        return moves
         
