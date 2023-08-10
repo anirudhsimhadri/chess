@@ -43,3 +43,25 @@ class Pawn():
                 return True
         return False
         
+    def all_valid_moves(
+        self,
+        start_row: int,
+        start_col: int,
+        matrix: cbm
+    ) -> list[tuple[int, int]]:
+        dir = -1 if self.color == "white" else 1
+        moves = [
+            (start_row + 2 * dir, start_col),
+            (start_row + dir, start_col),
+            (start_row + dir, start_col + 1),
+            (start_row + dir, start_col - 1)
+        ]
+
+        moves = [
+            (row, col) for (row, col) in moves if (
+                row in range(8) and col in range(8)
+                and self.is_valid_move(start_row, start_col, row, col, matrix)
+            )
+        ]
+
+        return moves
