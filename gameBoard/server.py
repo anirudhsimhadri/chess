@@ -188,6 +188,9 @@ def serve(port: int, password: str):
 
     p1Conn.send(b"white!!!" if p1IsWhite else b"black!!!")
     p2Conn.send(b"white!!!" if not p1IsWhite else b"black!!!")
+    
+    p1Conn.send(p2Name.encode().ljust(32, b"\0"))
+    p2Conn.send(p1Name.encode().ljust(32, b"\0"))
 
     print("P1 is white" if p1IsWhite else "P2 is white")
 
