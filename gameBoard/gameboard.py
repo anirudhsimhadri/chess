@@ -48,6 +48,20 @@ def draw_validation_popup(screen: Surface, msg: str):
     text = font.render(msg, True, (0xff, 0xff, 0xff))
     screen.blit(text, (cs.BOARD_SIZE + 18, cs.BOARD_SIZE // 3))
 
+def draw_names(screen: Surface, name: str, oppName: str, isWhite: bool):
+    """Draws both players' names above and below the board"""
+
+    font = pygame.font.SysFont("Arial", 24)
+
+    nameText = font.render(name, True, (0xff, 0xff, 0xff))
+    oppNameText = font.render(oppName, True, (0xff, 0xff, 0xff))
+
+    topPos = cs.BOX_HEIGHT - 32
+    botPos = cs.BOX_HEIGHT + cs.BOARD_SIZE
+
+    screen.blit(nameText, (4, botPos if isWhite else topPos))
+    screen.blit(oppNameText, (4, botPos if not isWhite else topPos))
+
 def main(conn: Socket | None, is_white: bool, name: str, oppName: str):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
     s = pygame.Surface((cs.SQUARE_SIZE, cs.SQUARE_SIZE), pygame.SRCALPHA)
@@ -181,6 +195,8 @@ def main(conn: Socket | None, is_white: bool, name: str, oppName: str):
 
         #Draw the material tracking boxes
         draw_tracking_boxes(screen)
+
+        draw_names(screen, name, oppName, is_white)
 
         #Draw the border around the chessboard
         draw_border(screen)
