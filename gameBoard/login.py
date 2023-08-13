@@ -111,7 +111,9 @@ def login_page():
 
     print("We're white" if isWhite else "We're black")
 
-    gameboard.main(conn, isWhite)
+    oppName = conn.recv(32).decode().rstrip("\0")
+
+    gameboard.main(conn, isWhite, username, oppName)
 
 if __name__ == "__main__":
     login_page()

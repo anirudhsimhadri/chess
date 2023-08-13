@@ -48,7 +48,7 @@ def draw_validation_popup(screen: Surface, msg: str):
     text = font.render(msg, True, (0xff, 0xff, 0xff))
     screen.blit(text, (cs.BOARD_SIZE + 18, cs.BOARD_SIZE // 3))
 
-def main(conn: Socket | None, is_white: bool):
+def main(conn: Socket | None, is_white: bool, name: str, oppName: str):
     screen = pygame.display.set_mode((cs.WINDOW_SIZE, cs.WINDOW_SIZE))
     s = pygame.Surface((cs.SQUARE_SIZE, cs.SQUARE_SIZE), pygame.SRCALPHA)
     alpha = 100
@@ -205,4 +205,4 @@ def main(conn: Socket | None, is_white: bool):
 
 if __name__ == "__main__":
     pygame.init()
-    main(None, True)
+    main(None, True, "__test__", "__test__")
